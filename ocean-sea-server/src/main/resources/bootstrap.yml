@@ -1,0 +1,243 @@
+spring: 
+  aop: 
+    auto: true
+    # cglib proxy not jdk proxy
+    #proxy-target-class: false
+  custom: # 自定义属性
+    default-env: ${SERVER_ENVIROMENT:sit}
+    default-name: application
+    default-label: master
+    default-profile: ${PROFILES_ACTIVITE:default}
+  #config: # 简化版本地数据源配置
+  #  name: ${spring.custom.default-name}  
+  #  additional-location: classpath:/config/${spring.custom.default-env}/
+  profiles: 
+    active: composite #启用的配置文件
+  main:
+    web-application-type: servlet
+  cloud: 
+    refresh: 
+      enabled: true
+    # RestTemplate和LoadBalancerClient的负载均衡重试策略
+    loadbalancer: 
+      retry: false
+    # 统一配置中心(本地与git)
+    config: 
+      # client端配置
+      enabled: true
+      watch: 
+        enabled: false
+      profile: ${spring.custom.default-profile}
+      name: ${spring.custom.default-name}
+      label: ${spring.custom.default-label}
+      failFast: false
+      # 本地集成服务端config配置
+      server: #ConfigServerProperties
+        bootstrap: true
+        prefix: /config
+        default-label: ${spring.custom.default-label}
+        default-application-name: ${spring.custom.default-name}
+        default-profile: ${spring.custom.default-profile}
+        strip-document-from-yaml: true #in "native" form
+        accept-empty: true #HTTP 404 needs to be sent
+        overrides: # 属性覆盖
+          foo: bar
+        health: 
+          enabled: false
+        composite:  # 复合数据源配置
+          - 
+            type: native   # 本地数据源配置
+            order: 1
+            add-label-locations: true
+            fail-on-error: false #how to handle exceptions during decryption
+            search-locations: 
+              - classpath:/config/${spring.custom.default-env}
+#          - 
+#            type: git # git数据源配置
+#            order: 2
+#            uri: http://127.0.0.1:2131/config/config-server.git
+#            search-paths: ocean-sea/${spring.custom.default-env}
+#            skip-ssl-validation: true
+#            force-pull: true
+#            clone-on-start: true
+#            delete-untracked-branches: true
+#            basedir: /var/wd/ocean-sea-config-repo #远程文件本地保存位置
+#            timeout: 5 #单位秒
+#            #username: user
+#            #password: secret
+#            #proxy:
+#            #  https: #http或https
+#            #    host: my-proxy.host.io
+#            #    port: '3128'
+#            #    username: myproxyusername
+#            #    password: myproxypassword
+#            #    non-proxy-hosts: example.com
+  mvc: 
+    dispatch-trace-request: true
+    dispatch-options-request: true
+    favicon: 
+      enabled: false
+    formcontent: 
+      putfilter: 
+        enabled: true
+    ignore-default-model-on-redirect: true
+    log-resolved-exception: false
+    throw-exception-if-no-handler-found: true
+    servlet: 
+      load-on-startup: 4
+  resources: 
+    add-mappings: true
+
+server: 
+  compression: 
+    enabled: true
+    mime-types: text/html,text/css,application/json
+  tomcat: 
+    basedir: ./tmp
+    background-processor-delay: 30
+    additional-tld-skip-patterns: 
+    port-header: X-Forwarded-Port
+    protocol-header: X-Forwarded-Proto
+    protocol-header-https-value: https
+    redirect-context-root: true
+    remote-ip-header: X-Forwarded-For
+    uri-encoding: UTF-8
+    accesslog: 
+      enabled: true
+      buffered: true
+      directory: ./log
+      file-date-format: .yyyy-MM-dd
+      pattern: '%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i" %D'
+      prefix: access_log
+      rename-on-rotate: false
+      request-attributes-enabled: false
+      rotate: true
+      suffix: .log
+
+eureka:
+  instance:
+    #服务刷新时间配置，每隔这个时间会主动心跳一次
+    #默认30s
+    lease-renewal-interval-in-seconds: 5
+    #服务过期时间配置,超过这个时间没有接收到心跳EurekaServer就会将这个实例剔除
+    #注意，EurekaServer一定要设置eureka.server.eviction-interval-timer-in-ms否则这个配置无效，这个配置一般为服务刷新时间配置的三倍
+    #默认90s
+    lease-expiration-duration-in-seconds: 15
+    prefer-ip-address: true
+    hostname: ${SERVER_HOSTNAME:${spring.cloud.client.hostname}}
+    ip-address: ${SERVER_ACCESSABLE_IP:${spring.cloud.client.ip-address}}
+    non-secure-port-enabled: true
+    non-secure-port: ${SERVER_ACCESSABLE_PORT:10000}
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${SERVER_ACCESSABLE_IP:${spring.cloud.client.ip-address}}:${server.port}
+    status-page-url-path: /info
+    health-check-url-path: /health
+  client:
+    #eureka client刷新本地缓存时间
+    #默认30s
+    registryFetchIntervalSeconds: 5
+    fetch-registry: true
+    instance-info-replication-interval-seconds: 10
+    initial-instance-info-replication-interval-seconds: 30
+    eureka-service-url-poll-interval-seconds: 60
+    eureka-server-read-timeout-seconds: 8
+    eureka-server-connect-timeout-seconds: 5
+    eureka-server-total-connections: 1000
+    eureka-server-total-connections-per-host: 100
+    eureka-connection-idle-timeout-seconds: 30
+
+# ribbon负载全局配置
+ribbon:
+  ConnectionTomeout: 1000
+  #eureka客户端ribbon刷新时间
+  #默认30s
+  ServerListRefreshInterval: 5000
+  eureka:
+    enable: false
+  ReadTimeout: 5000
+  # 对所有操作请求都进行重试(禁止)
+  OkToRetryOnAllOperations: false
+  # 切换实例的重试次数
+  MaxAutoRetriesNextServer: 0
+  # 对当前实例的重试次数
+  MaxAutoRetries: 0
+# ribbon负载定向配置
+# <sericeId>: 
+#   ribbon:
+#     NFLoadBalancerPingClassName: com.netflix.loadbalancer.PingUrl
+
+logging: 
+  #path: ${LOGGING.PATH:/var/wd/ocean-sea_logs/}
+  path: ${LOGGING_PATH}
+  register-shutdown-hook: false
+
+# ACTUATOR PROPERTIES
+management: 
+  server: 
+    servlet: 
+      context-path: /
+  endpoints: 
+    web: 
+      base-path: /ocean/sea
+      exposure: 
+        include: '*'
+        #exclude: env
+  endpoint: 
+    shutdown: 
+      enabled: false
+    health: 
+      show-details: always    # never, always, when-authorized
+
+# hystrix相关
+feign:
+  okhttp: 
+    enabled: false
+  httpclient:
+    #Apache的HTTP Client替换Feign原始的http client
+    enabled: true
+    maxConnections: 20480
+    maxConnectionsPerRoute: 512
+    timeToLive: 60
+    connectionTimeout: 10000
+    userAgent: 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0'
+    #defaultRequestConfig:
+    #  connectionRequestTimeout: 60000
+    #  connectTimeout: 60000
+    #  socketTimeout: 60000
+  client:
+    # 配置文件优先级高
+    defaultToProperties: true
+    config:
+      default:
+        loggerLevel: full
+        # retryer: feign.Retryer.NEVER_RETRY
+  hystrix: 
+    enabled: true
+  compression: 
+    request: 
+      #请求和响应GZIP压缩支持
+      enabled: true
+      mime-types: application/json,application/xml,text/xml
+      min-request-size: 2048
+    response: 
+      enabled: false
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 15000
+        # 熔断关闭
+        timeout:
+          enabled: false
+  threadpool:
+    default:
+      coreSize: 40
+      maximumSize: 100
+      maxQueueSize: 100
+
+hibernate: 
+  validator: 
+    fail_fast: true
+

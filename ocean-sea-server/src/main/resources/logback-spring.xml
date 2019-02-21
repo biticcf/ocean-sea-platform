@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Logback配置文件。
+-->
+<configuration scan="false" scanPeriod="3600 seconds" debug="false">
+	<!-- logger上下文,LOG_PATH是spring boot内置变量,取值logging.path -->
+	<springProperty scope="context" name="APPLICATION_NAME" source="spring.application.name"/>
+	<springProperty scope="context" name="LOGGING_ROOT" source="logging.path"/>
+	<property name="PATTERN" value="%d [%t-${PID}][TraceId:%X{traceId}] %-5p %c - [%m]%n" />
+	
+	<!-- <contextName>${APPLICATION_NAME}Log</contextName> -->
+	
+	<!-- ===================================================================== -->
+	<!-- Appenders                                                             -->
+	<!-- ===================================================================== -->
+	<!-- ===== [公共Appender] ===== -->
+	
+	<!-- [1,公共Appender] 默认 -->
+	<appender name="DEFAULT-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOGGING_ROOT}/common-default.log</file>
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 日志文件输出的文件名 -->
+			<FileNamePattern>${LOGGING_ROOT}/default/common-default.log.%d{yyyyMMdd}</FileNamePattern>
+			<MaxHistory>20</MaxHistory>
+		</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>${PATTERN}</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- [2,公共Appender] 汇总错误 -->
+	<appender name="ERROR-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOGGING_ROOT}/common-error.log</file> 
+    	<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+    		<level>ERROR</level>
+    	</filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      		<fileNamePattern>${LOGGING_ROOT}/error/common-error.log.%d{yyyyMMdd}</fileNamePattern>
+      		<maxHistory>20</maxHistory>
+    	</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>${PATTERN}</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- [3,公共Appender] 汇总性能统计 -->
+	<appender name="PERF-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOGGING_ROOT}/common-perf.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      		<fileNamePattern>${LOGGING_ROOT}/perf/common-perf.log.%d{yyyyMMdd}</fileNamePattern>
+      		<maxHistory>20</maxHistory>
+    	</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>${PATTERN}</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- [4,公共Appender] 控制台STDOUT -->
+	<appender name="STDOUT-APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+		<param name="target" value="System.out"/>
+		<encoder charset="UTF-8">
+			<pattern>${PATTERN}</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- [5,公共Appender] 控制台STDERR -->
+	<appender name="STDERR-APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+		<param name="target" value="System.err"/>
+		<encoder charset="UTF-8">
+			<pattern>${PATTERN}</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- [6,公共Appender] Service层 -->
+	<appender name="SERVICE-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<file>${LOGGING_ROOT}/common-service.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      		<fileNamePattern>${LOGGING_ROOT}/service/common-service.log.%d{yyyyMMdd}</fileNamePattern>
+      		<maxHistory>10</maxHistory>
+    	</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>${PATTERN}</pattern>
+		</encoder>
+    </appender>
+    
+    <!-- [7,公共Appender] Web层 -->
+    <appender name="WEB-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<file>${LOGGING_ROOT}/common-web.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      		<fileNamePattern>${LOGGING_ROOT}/web/common-web.log.%d{yyyyMMdd}</fileNamePattern>
+      		<maxHistory>10</maxHistory>
+    	</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>${PATTERN}</pattern>
+		</encoder>
+    </appender>
+    
+	<!-- [8,应用Appender] 应用业务处理结果日志 -->
+	<appender name="CACHE-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOGGING_ROOT}/common-cache.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      		<fileNamePattern>${LOGGING_ROOT}/cache/common-cache.log.%d{yyyyMMdd}</fileNamePattern>
+      		<maxHistory>10</maxHistory>
+    	</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>${PATTERN}</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- [9,公共Appender] 数据访问层 -->
+	<appender name="DAO-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOGGING_ROOT}/common-dao.log</file>
+    	<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+	      	<fileNamePattern>${LOGGING_ROOT}/dao/common-dao.log.%i</fileNamePattern>
+	      	<minIndex>1</minIndex>
+	      	<maxIndex>5</maxIndex>
+	    </rollingPolicy>
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+          	<maxFileSize>100MB</maxFileSize>
+        </triggeringPolicy>
+		<encoder charset="UTF-8">
+			<pattern>${PATTERN}</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- <param name="ConversionPattern" value="%d [%t] %-5p %c - [%m]%n"/> -->
+	<!-- ===================================================================== -->
+	<!-- Loggers                                                               -->
+	<!-- ===================================================================== -->
+	<!-- ===== [公共Logger] ===== -->
+	<!-- [公共Logger] 性能 - service性能  -->
+	<logger name="com.biticcf.ocean.sea.core.common.aop.PerformanceMonitorInterceptor" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="PERF-APPENDER"/>
+	</logger>
+	<!-- [公共Logger] 控制台STDOUT - STDOUT -->
+	<logger name="STDOUT" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="STDOUT-APPENDER"/>
+	</logger>
+	<!-- [公共Logger] 控制台STDERR - STDERR -->
+	<logger name="STDERR" additivity="false">
+		<level value="ERROR"/>
+		<appender-ref ref="STDERR-APPENDER"/>
+	</logger>
+	<!-- ===== [框架Logger] ===== -->
+	<!-- [框架Logger] 数据访问层 - mybatis -->
+	<logger name="org.mybatis" additivity="false">
+		<level value="ERROR"/>
+		<appender-ref ref="ERROR-APPENDER"/>
+	</logger>
+	<!-- [框架Logger] 数据访问层 - SQL -->
+	<logger name="java.sql" additivity="false">
+		<level value="ERROR"/>
+		<appender-ref ref="ERROR-APPENDER"/>
+	</logger>
+	<!-- [应用Logger] Memcache -->
+	<logger name="com.danga">
+		<level value="ERROR"/>
+		<appender-ref ref="ERROR-APPENDER"/>
+	</logger>
+	<logger name="org.springframework">
+		<level value="ERROR"/>
+		<appender-ref ref="ERROR-APPENDER"/>
+	</logger>
+	
+	<!-- 1,COMMON.LOG -->
+    <logger name="COMMON.LOG" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="DEFAULT-APPENDER"/>
+		<appender-ref ref="ERROR-APPENDER"/>
+	</logger>
+	
+	<!-- 2,SERVICE.LOG -->
+	<logger name="SERVICE.LOG" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="SERVICE-APPENDER"/>
+		<appender-ref ref="ERROR-APPENDER"/>
+	</logger>
+	
+	<!-- 3,WEB.LOG -->
+	<logger name="WEB.LOG" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="WEB-APPENDER"/>
+		<appender-ref ref="ERROR-APPENDER"/>
+	</logger>
+	
+	<!-- 4,CACHE.LOG -->
+	<logger name="CACHE.LOG" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="CACHE-APPENDER"/>
+		<appender-ref ref="ERROR-APPENDER"/>
+	</logger>
+	
+	<!-- 5,DAO.LOG -->
+	<logger name="DAO.LOG" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="DAO-APPENDER"/>
+		<appender-ref ref="ERROR-APPENDER"/>
+	</logger>
+	
+	<!-- ===================================================================== -->
+	<!-- Root logger                                                           -->
+	<!-- ===================================================================== -->
+	<root>
+		<level value="INFO"/>
+		<appender-ref ref="STDOUT-APPENDER"/>
+		<appender-ref ref="DEFAULT-APPENDER"/>
+		<appender-ref ref="ERROR-APPENDER"/>
+	</root>
+	
+	<jmxConfigurator/>
+</configuration>

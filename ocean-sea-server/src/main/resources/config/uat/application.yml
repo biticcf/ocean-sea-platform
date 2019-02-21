@@ -1,0 +1,189 @@
+spring: 
+  application: 
+    name: ${TENANT_GROUP:}ocean-sea
+  http: 
+    converters: 
+      preferred-json-mapper: jackson
+    encoding:
+      enabled: true
+      charset: UTF-8
+  servlet:
+    multipart: 
+      enabled: true
+      file-size-threshold: 0
+      location: .
+      max-file-size: 10MB
+      max-request-size: 10MB
+      resolve-lazily: false
+  jackson: #接口输出端日期格式
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+08:00
+  messages: 
+    encoding: UTF-8
+  mvc:  #WebMvcAutoConfiguration自动配置
+    async: 
+      request-timeout: 30000
+    date-format: yyyy-MM-dd HH:mm:ss  #接口输入端日期格式,被StringDateConverter覆盖
+  transaction: 
+    # Default transaction timeout in seconds.
+    default-timeout: 600
+    rollback-on-commit-failure: true
+  datasource: 
+    # 使用c3p0数据库连接池
+    type: com.mchange.v2.c3p0.ComboPooledDataSource
+  data: 
+    elasticsearch: 
+      cluster-nodes: 127.0.0.1:9200
+      cluster-name: clustername
+      index-name: indexname
+  kafka: 
+    enabled: false
+    client-id: demo # ID to pass to the server when making requests. Used for server-side logging.
+    template:
+      defaultTopic: trade-order
+    consumer: 
+      enabled: true
+      bootstrap-servers: 127.0.0.1:9092
+      group-id: group
+      topic: topic
+      enable-auto-commit: true
+      auto-commit-interval: 100
+      auto-offset-reset: latest
+      fetch-max-wait: 100
+      fetch-min-size: 100
+      max-poll-records: 200
+      heartbeat-interval: 200
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer: 
+      enabled: true
+      bootstrap-servers: 127.0.0.1:9092
+      topic: topic
+      acks: 0 # 0-高吞吐量,1-均衡,all-高安全性
+      batch-size: 4096
+      buffer-memory: 1024KB
+      compression-type: gzip # snappy消耗较低的CPU,gzip算法提高了很高的压缩比
+      retries: 1
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+server: 
+  port: ${SERVER_PORT:10000}
+  display-name: ${TENANT_GROUP:}ocean-sea
+  connection-timeout: 12000
+  server-header: 
+  servlet: 
+    context-path: /
+    path: /
+  tomcat: 
+    async-timeout: 60000
+    max-connections: ${SERVER.TOMCAT.MAX-CONNECTIONS:1024}
+    max-threads: ${SERVER.TOMCAT.MAX-THREADS:8}
+    accept-count: ${SERVER.TOMCAT.ACCEPT-COUNT:1024}
+    min-spare-threads: ${SERVER.TOMCAT.MIN-SPARE-THREADS:2}
+    acceptor-thread-count: ${SERVER.TOMCAT.ACCEPTOR-THREAD-COUNT:8}
+    max-http-post-size: 10000000
+
+eureka:
+  client:
+    enabled: false
+    serviceUrl:
+      defaultZone: ${REGISTER_CENTER_DEFAULT_SERVICE_URL:http://127.0.0.1:12344/eureka/}
+
+# Web Async
+# effective是高效异步任务管理池
+async: 
+  effective: 
+    maxPoolSize: 200
+    keepAliveSeconds: 60
+    queueCapacity: 2000
+    corePoolSize: 100
+    threadNamePrefix: EffectiveTask-
+    allowCoreThreadTimeOut: true
+    waitForTasksToCompleteOnShutdown: true
+  # common是普通异步任务管理池
+  common: 
+    maxPoolSize: 20
+    keepAliveSeconds: 10
+    queueCapacity: 100
+    corePoolSize: 5
+    threadNamePrefix: CommonTask-
+    allowCoreThreadTimeOut: true
+    waitForTasksToCompleteOnShutdown: true
+
+# 自定义REDIS配置
+redis: 
+  hostName: ${REDIS.HOST:localhost}
+  #password: xxx
+  port: ${REDIS.PORT:6379}
+  timeout: ${REDIS.TIMEOUT:30000}
+  #useSsl: false
+  #dbIndex: 0
+  usePool: true
+  # redis pool配置
+  pool: 
+    maxTotal: ${REDIS.POOL.MAX_TOTAL:10}
+    maxIdle: ${REDIS.POOL.MAX_IDLE:4}
+    minIdle: ${REDIS.POOL.MIN_IDLE:2}
+    # 空闲链接逐出配置
+    # 逐出连接的最小空闲时间 1800000毫秒(30分钟)
+    timeBetweenEvictionRunsMillis: 300000
+    # 逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1
+    minEvictableIdleTimeMillis: 1800000
+    # 每次逐出检查时 逐出的最大数目
+    numTestsPerEvictionRun: 3
+
+# 数据源配置
+datasource:
+  # Master数据源配置
+  master: 
+    driverClass: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql:replication://${C3P0.HOST:localhost}:${C3P0.PORT:3306}/${C3P0.DATABASE:goods}?useSSL=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=true&serverTimezone=GMT%2B8
+    user: ${C3P0.USER:demotest}
+    password: ${C3P0.PASSWORD:demotest}
+    minPoolSize: ${C3P0.MINPOOLSIZE:4}
+    maxPoolSize: ${C3P0.MAXPOOLSIZE:20}
+    maxIdleTime: 1800000
+    acquireIncrement: ${C3P0.ACQUIREINCREMENT:2}
+    maxStatements: 0
+    initialPoolSize: ${C3P0.INITIALPOOLSIZE:4}
+    idleConnectionTestPeriod: 60
+    acquireRetryAttempts: 5
+    acquireRetryDelay: 1000
+    breakAfterAcquireFailure: false
+    testConnectionOnCheckin: true
+    testConnectionOnCheckout: false
+    preferredTestQuery: SELECT 1 FROM DUAL
+
+# mybatis配置
+mybatis: 
+  config-location: classpath:bean/mybatis/mybatis_config.xml
+  mapper-locations: classpath:/bean/mybatis/mapping/*.xml
+  type-aliases-package: com.biticcf.ocean.sea.domain.dao.po
+  type-dao-package: com.biticcf.ocean.sea.domain.dao
+  # type-handlers-package: com.example.typehandler
+  executorType: REUSE
+
+# Perform Framework
+performframework: 
+  # 单位ms
+  threshold: 50
+  # 入口配置
+  entrance: 
+    # proxyTargetClass: false
+    interceptorNames: interceptorChain
+    # 参与接口调用性能监控的类或者接口列表(支持一个*通配符),多个用英文逗号分隔
+    beanNames: '*Service'
+    # 在beanNames中不参与接口调用性能监控的类或者接口列表(支持一个*通配符)
+    beanNamesExclude: mvcConversionService,ObjectMapper
+  # 调用链配置
+  chain: 
+    # proxyTargetClass: false
+    interceptorNames: performanceInstrumentInterceptor
+    # 参与接口调用性能监控的类或者接口列表(支持一个*通配符),多个用英文逗号分隔
+    beanNames: '*Domain,*Repository,*DAO,*ServiceCallback,*FeignClient'
+    # 在beanNames中不参与接口调用性能监控的类或者接口列表(支持一个*通配符)
+    beanNamesExclude: mvcConversionService,ObjectMapper
+
+swagger2: 
+  enable: true

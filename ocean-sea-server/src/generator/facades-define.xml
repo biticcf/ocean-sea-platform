@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.biticcf.com" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://www.biticcf.com generator.xsd">
+  <!-- 非空 -->
+  <properties>
+    <!-- 非空,项目名称 -->
+    <name>MyProj</name>
+    <!-- 非空,只允许出现小写字母 -->
+    <company>biticcf</company>
+    <!-- 非空 -->
+    <scope>ocean</scope>
+    <!-- 非空 -->
+    <template>sea</template>
+    <!-- 可空,默认是false,true表示覆盖已存在的文件,false表示先做备份再做覆盖 -->
+    <override>false</override>
+    <!-- 可空,慎重填写,会覆盖默认定义的文件夹 -->
+    <dirs>
+      <dir>
+        <name>model</name>
+        <value>com/biticcf/ocean/sea/model</value>
+      </dir>
+      <dir>
+        <name>facade</name>
+        <value>com/biticcf/ocean/sea/facade</value>
+      </dir>
+      <dir>
+        <name>controller</name>
+        <value>com/biticcf/ocean/sea/web/controller</value>
+      </dir>
+      <dir>
+        <name>service</name>
+        <value>com/biticcf/ocean/sea/service</value>
+      </dir>
+      <dir>
+        <name>domain</name>
+        <value>com/biticcf/ocean/sea/domain</value>
+      </dir>
+    </dirs>
+  </properties>
+  
+  <!-- 可空,采用默认方案(建议保持默认) -->
+  <models>
+    <model>
+      <name>api</name>
+      <includeDirs>
+        <dirRef>model</dirRef>
+        <dirRef>facade</dirRef>
+      </includeDirs>
+    </model>
+    <model>
+      <name>server</name>
+      <includeDirs>
+        <dirRef>controller</dirRef>
+        <dirRef>service</dirRef>
+        <dirRef>domain</dirRef>
+      </includeDirs>
+    </model>
+  </models>
+  
+  <facades>
+    <facade>
+      <!-- Facade名称前缀,只允许大写字母开头,后面跟小写字母 -->
+      <name>Mydemo</name>
+      <description>Demo接口定义说明</description>
+      <!-- 是否执行该facade的代码生成，true表示生成，false表示忽略 -->
+      <execGenerator>true</execGenerator>
+      <!-- 是否生成Swagger文档 -->
+      <useSwagger>true</useSwagger>
+      <!-- 接口前可能带的注解,不包含Mvc和Swagger注解,填写完整路径 -->
+      <annotations>
+        <annotation>org.springframework.validation.annotation.Validated</annotation>
+      </annotations>
+      <!-- 接口上配置的@RequestMapping定义，可空 -->
+      <requestMapping>
+        <!-- 接口上配置的@RequestMapping的path值，可空 -->
+        <requestPaths>
+          <requestPath>/ocean/sea/v1</requestPath>
+        </requestPaths>
+        <!-- 接口上配置的@RequestMapping的method值，可空 -->
+        <requestMethods>
+          <requestMethod></requestMethod>
+        </requestMethods>
+        <!-- 接口上配置的@RequestMapping的consume值，可空 -->
+        <requestConsumes>
+          <requestConsume></requestConsume>
+        </requestConsumes>
+        <!-- 接口上配置的@RequestMapping的produce值，可空 -->
+        <requestProduces>
+          <requestProduce></requestProduce>
+        </requestProduces>
+        <!-- 接口上配置的@RequestMapping的header值，可空 -->
+        <requestHeaders>
+          <requestHeader></requestHeader>
+        </requestHeaders>
+        <!-- 接口上配置的@RequestMapping的param值，可空 -->
+        <requestParams>
+          <requestParam></requestParam>
+        </requestParams>
+      </requestMapping>
+      <!-- 接口内的方法定义，不可空 -->
+      <methods>
+        <method>
+          <!-- 方法名,非空,只允许小写字母开头 -->
+          <name>queryBy</name>
+          <description>方法定义说明</description>
+          <!-- 是否执行该method的代码生成(暂不支持)，true表示生成，false表示忽略 -->
+          <execGenerator>true</execGenerator>
+          <!-- 返回值结果实际类型(不考虑ReturnResult的外层封装) -->
+          <returnRealType><![CDATA[java.util.List<com.biticcf.ocean.sea.model.DemoModel>]]></returnRealType>
+          <!-- 参数列表 -->
+          <params>
+            <param>
+              <!-- 参数名称 -->
+              <name>page</name>
+              <!-- 完整java类型路径,基础类型请用封装类型替代 -->
+              <type><![CDATA[java.lang.Integer]]></type>
+              <description>参数定义说明</description>
+              <!-- 参数是否允许空,默认是false -->
+              <nullable>false</nullable>
+              <!-- 参数默认值,允许空 -->
+              <defaultValue>0</defaultValue>
+              <!-- 请求参数类型,可空:RequestParam(默认值),PathVariable,RequestBody,RequestHeader -->
+              <requestType>RequestParam</requestType>
+              <!-- 参数前可能带的注解,不包含Mvc和Swagger注解,填写完整java路径 -->
+              <annotations>
+                <annotation>javax.validation.Valid</annotation>
+              </annotations>
+            </param>
+            <param>
+              <name>name</name>
+              <type><![CDATA[java.lang.String]]></type>
+              <description>用户名称</description>
+            </param>
+          </params>
+          <!-- 查询结果是否列表,可空,默认false -->
+          <listResultFlag>true</listResultFlag>
+          <!-- 如果是查询列表,是否分页,可空,默认false -->
+          <pagination>false</pagination>
+          <!-- 该方法涉及的业务是否需要开启事务,可空,默认true -->
+          <withTransaction>true</withTransaction>
+          <!-- 方法后抛出的异常,可空,默认是java.lang.Exception,需要填写完整java类名 -->
+          <exceptions>
+            <exception>java.lang.Exception</exception>
+          </exceptions>
+          <!-- 方法上配置的@RequestMapping定义 -->
+          <requestMapping>
+            <!-- 方法上配置的@RequestMapping的path值,不可与接口上的定义同时空 -->
+            <requestPaths>
+              <requestPath>/demo</requestPath>
+            </requestPaths>
+            <!-- 方法上配置的@RequestMapping的method值,可空 -->
+            <requestMethods>
+              <requestMethod>GET</requestMethod>
+            </requestMethods>
+            <!-- 方法上配置的@RequestMapping的consume值,可空 -->
+            <requestConsumes>
+              <requestConsume>application/json</requestConsume>
+            </requestConsumes>
+            <!-- 方法上配置的@RequestMapping的produce值,可空(默认是application/json) -->
+            <requestProduces>
+              <requestProduce>application/json</requestProduce>
+            </requestProduces>
+            <!-- 方法上配置的@RequestMapping的header值,可空 -->
+            <requestHeaders>
+              <requestHeader></requestHeader>
+            </requestHeaders>
+            <!-- 方法上配置的@RequestMapping的param值,可空 -->
+            <requestParams>
+              <requestParam></requestParam>
+            </requestParams>
+          </requestMapping>
+        </method>
+      </methods>
+    </facade>
+  </facades>
+</project>

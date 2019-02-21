@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.biticcf.ocean.sea.domain.dao.DemoDAO">
+   <sql id="tableColumns">
+   		ID,
+		GOODS_CODE, 
+		GOODS_SN,
+		STATUS,
+		CREATE_TIME,
+		UPDATE_TIME,
+		VERSION
+   </sql>
+
+   <insert id="insert" 
+           parameterType="com.biticcf.ocean.sea.domain.dao.po.DemoPo"
+           useGeneratedKeys="true" 
+           keyProperty="id">
+		INSERT INTO WD_DEMO_INFO
+		(
+			GOODS_CODE,
+			GOODS_SN,
+			STATUS,
+			CREATE_TIME,
+			UPDATE_TIME,
+			VERSION
+		)
+		VALUES 
+		( 
+			#{goodsCode},
+			#{goodsSn},
+			0,
+			now(),
+			now(),
+			0
+		)
+   </insert>
+   
+   <insert id="batchInsert" 
+               parameterType="com.biticcf.ocean.sea.domain.dao.po.DemoPo"
+               useGeneratedKeys="true" 
+               keyProperty="id">
+		INSERT INTO WD_DEMO_INFO
+		(
+			GOODS_CODE,
+			GOODS_SN,
+			STATUS,
+			CREATE_TIME,
+			UPDATE_TIME,
+			VERSION
+		)
+		VALUES 
+		<foreach collection="list" item="item" index="index" separator="," >
+		( 
+			#{item.goodsCode},
+			#{item.goodsSn},
+			0,
+			now(),
+			now(),
+			0
+		)
+		</foreach>
+   </insert>
+</mapper>

@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.biticcf.ocean.sea</groupId>
+	<artifactId>ocean-sea-parent</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>ocean-sea-parent</name>
+	
+	<modules>
+		<module>ocean-sea-api</module>
+		<module>ocean-sea-server</module>
+	</modules>
+	
+	<properties>
+		<skipTests>true</skipTests>
+		<env>dev</env>
+		
+		<build.final.name>ocean-sea-release</build.final.name>
+		
+		<!-- CheckStyle检查 -->
+		<skipCheckStyle>true</skipCheckStyle>
+		
+		<!-- docker配置 -->
+		<dockerfile.skip>true</dockerfile.skip>
+		<docker.repostory>xxxx.tencentyun.com</docker.repostory>
+		<docker.repostory.user>xxxxxxxx</docker.repostory.user>
+		<docker.repostory.password>xxxxxxxxx</docker.repostory.password>
+		<docker.registry.name>myregistry</docker.registry.name>
+		<docker.image.name>sea</docker.image.name>
+		
+		<java.version>8</java.version>
+		
+		<!-- 定义版本号 -->
+		<ocean-sea.version>1.0.0.20190221</ocean-sea.version>
+		<!-- 根据XML接口定义自动生成代码 -->
+		<skipGenerator>true</skipGenerator>
+		<!-- phoenix.mountain核心组件版本 -->
+		<phoenix-mountain.version>1.0.0.20190220</phoenix-mountain.version>
+		
+		<!-- asm version -->
+		<asm.version>6.1.1</asm.version>
+		
+		<!-- spring platform -->
+		<spring.boot.version>2.1.0.RELEASE</spring.boot.version>
+		<spring.cloud.version>Finchley.SR2</spring.cloud.version>
+		
+		<!-- mybatis -->
+		<mybatis.spring.boot.starter.version>2.0.0</mybatis.spring.boot.starter.version>
+		<mybatis.spring.version>2.0.0</mybatis.spring.version>
+		<mybatis.version>3.5.0</mybatis.version>
+		
+		<!-- fastjson -->
+		<fastjson.version>1.2.51</fastjson.version>
+		
+		<!-- swagger -->
+		<guava.version>27.0-jre</guava.version>
+		<springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+		<springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
+		
+		<!-- swagger2markup -->
+		<swagger2markup.version>1.3.3</swagger2markup.version>
+        <asciidoctor.input.directory>${project.basedir}/src/docs/asciidoc</asciidoctor.input.directory>
+        <swagger.output.dir>${project.build.directory}/swagger</swagger.output.dir>
+        <swagger.snippetOutput.dir>${project.build.directory}/asciidoc/snippets</swagger.snippetOutput.dir>
+        <generated.asciidoc.directory>${project.build.directory}/asciidoc/generated</generated.asciidoc.directory>
+        <asciidoctor.html.output.directory>${project.build.directory}/asciidoc/html</asciidoctor.html.output.directory>
+        <asciidoctor.pdf.output.directory>${project.build.directory}/asciidoc/pdf</asciidoctor.pdf.output.directory>
+        <swagger.input>${swagger.output.dir}/swagger.json</swagger.input>
+		
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<!-- core jars -->
+			<dependency>
+				<groupId>com.beyonds.phoenix.mountain</groupId>
+				<artifactId>phoenix-mountain-core</artifactId>
+				<version>${phoenix-mountain.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.beyonds.phoenix.mountain</groupId>
+				<artifactId>phoenix-mountain-shackle</artifactId>
+				<version>${phoenix-mountain.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.biticcf.ocean.sea</groupId>
+				<artifactId>ocean-sea-api</artifactId>
+				<version>${ocean-sea.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.biticcf.ocean.sea</groupId>
+				<artifactId>ocean-sea-server</artifactId>
+				<version>${ocean-sea.version}</version>
+			</dependency>
+			
+			<!-- SpringFramework把需要升级版本的组件放到前面 -->
+        	<!-- spring boot -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring cloud -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            
+			<!-- fastjson -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
+			</dependency>
+			
+			<!-- mybatis -->
+			<dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.spring.boot.starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${mybatis.spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            
+            <!-- 解决Feign的 application/x-www-form-urlencoded和multipart/form-data类型 -->
+            <dependency>
+				<groupId>io.github.openfeign.form</groupId>
+				<artifactId>feign-form</artifactId>
+				<version>3.4.1</version>
+			</dependency>
+			<dependency>
+				<groupId>io.github.openfeign.form</groupId>
+				<artifactId>feign-form-spring</artifactId>
+				<version>3.4.1</version>
+			</dependency>
+			<dependency>
+   				<groupId>commons-fileupload</groupId>
+   				<artifactId>commons-fileupload</artifactId>
+   				<version>1.3.3</version>
+			</dependency>
+            
+            <dependency>
+      			<groupId>com.google.guava</groupId>
+      			<artifactId>guava</artifactId>
+      			<version>${guava.version}</version>
+    		</dependency>
+            <dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${springfox-swagger2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+				<version>${springfox-swagger-ui.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>aopalliance</groupId>
+				<artifactId>aopalliance</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+            	<groupId>org.apache.commons</groupId>
+            	<artifactId>commons-lang3</artifactId>
+            	<version>3.7</version>
+        	</dependency>
+        	<dependency>
+            	<groupId>com.mchange</groupId>
+            	<artifactId>c3p0</artifactId>
+            	<version>0.9.5.2</version>
+        	</dependency>
+        	
+        	<!-- 用于序列化 -->
+        	<dependency>
+            	<groupId>com.esotericsoftware</groupId>
+            	<artifactId>kryo</artifactId>
+            	<version>4.0.2</version>
+        	</dependency>
+        	<dependency>
+            	<groupId>com.caucho</groupId>
+            	<artifactId>hessian</artifactId>
+            	<version>4.0.51</version>
+        	</dependency>
+        	
+        	<!-- ElasticSearch 5.xx，如果需要ElasticSearch 6.xx,去掉该配置即可 -->
+        	<dependency>
+      			<groupId>org.springframework.data</groupId>
+      			<artifactId>spring-data-elasticsearch</artifactId>
+      			<version>3.0.12.RELEASE</version>
+      		</dependency>
+        	<dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>5.6.10</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>transport</artifactId>
+                <version>5.6.10</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.plugin</groupId>
+                <artifactId>transport-netty4-client</artifactId>
+                <version>5.6.10</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-client</artifactId>
+                <version>5.6.10</version>
+            </dependency>
+            <!-- ElasticSearch 5.xx End -->
+        	
+        	<dependency>
+            	<groupId>org.ow2.asm</groupId>
+            	<artifactId>asm</artifactId>
+            	<version>${asm.version}</version>
+        	</dependency>
+        	
+		</dependencies>
+	</dependencyManagement>
+	
+	<build>
+		<plugins>
+            <!-- 适用于JDK8以前版本,不适用于以后版本 -->
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<parameters>true</parameters>
+					<encoding>UTF-8</encoding>
+					<fork>true</fork>
+				</configuration>
+				<dependencies>
+        			<dependency>
+            			<groupId>org.ow2.asm</groupId>
+            			<artifactId>asm</artifactId>
+            			<version>${asm.version}</version>
+        			</dependency>
+    			</dependencies>
+			</plugin>
+			
+			<plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-source-plugin</artifactId>
+              <executions>
+                  <execution>
+                      <id>attach-sources</id>
+                      <goals>
+                          <goal>jar</goal>
+                      </goals>
+                  </execution>
+              </executions>
+            </plugin>
+			
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.0.0</version>
+                <dependencies>
+	                <dependency>
+	                    <groupId>com.puppycrawl.tools</groupId>
+	                    <artifactId>checkstyle</artifactId>
+	                    <version>8.14</version>
+	                </dependency>
+                </dependencies>
+                <configuration>
+                	<skip>${skipCheckStyle}</skip>
+				    <configLocation>check_style.xml</configLocation>
+					<encoding>UTF-8</encoding>
+			    </configuration>
+                <executions>
+		            <execution>
+			            <id>validate</id>
+			            <phase>validate</phase>
+			            <goals>
+				            <goal>check</goal>
+			            </goals>
+			            <configuration>
+				            <consoleOutput>false</consoleOutput>
+				            <failsOnError>true</failsOnError>
+				            <includeTestSourceDirectory>true</includeTestSourceDirectory>
+				            <failOnViolation>true</failOnViolation>
+				            <linkXRef>false</linkXRef>
+				            <maxAllowedViolations>0</maxAllowedViolations>
+                            <violationSeverity>warning</violationSeverity>
+			            </configuration>
+		            </execution>
+	            </executions>
+            </plugin>
+            
+            <!-- test测试 -->
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <io.springfox.staticdocs.outputDir>${swagger.output.dir}</io.springfox.staticdocs.outputDir>
+                        <io.springfox.staticdocs.snippetsOutputDir>${swagger.snippetOutput.dir}</io.springfox.staticdocs.snippetsOutputDir>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            
+            <!-- 代码自动生成器(controller/service/domain) -->
+            <plugin>
+    			<groupId>org.codehaus.mojo</groupId>
+    			<artifactId>exec-maven-plugin</artifactId>
+    			<version>1.6.0</version>
+    			<executions>
+        			<execution>
+            			<id>generator-java</id>
+            			<goals>
+                			<goal>java</goal>
+            			</goals>
+        			</execution>
+    			</executions>
+    			<configuration>
+    				<skip>${skipGenerator}</skip>
+        			<includePluginDependencies>true</includePluginDependencies>
+        			<cleanupDaemonThreads>false</cleanupDaemonThreads>
+        			<arguments>
+            			<argument>dir=${basedir}</argument>
+            			<argument>file=/src/generator/facades-define-min.xml</argument>
+        			</arguments>
+        			<mainClass>com.biticcf.flying.hill.generator.MainGenerator</mainClass>
+    			</configuration>
+    			<dependencies>
+    				<dependency>
+    					<groupId>com.beyonds.phoenix.mountain</groupId>
+						<artifactId>phoenix-mountain-generator</artifactId>
+						<version>${phoenix-mountain.version}</version>
+					</dependency>
+    			</dependencies>
+			</plugin>
+            
+		</plugins>
+	</build>
+	
+	<repositories>
+		<repository>
+			<id>rdc-releases</id>
+			<url>https://repo.rdc.aliyun.com/repository/49339-release-Sz60lB/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	
+</project>

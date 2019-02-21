@@ -1,0 +1,34 @@
+## License
+
+This framework is released under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).
+
+联系方式：
+Name： Daniel Cao
+Mail： 19070443@qq.com
+
+说明：
+1，项目名称：ocean-sea-platform
+
+2，导入到开发工具Eclipse或者Idea的方法：
+2.1，方法一，直接用import功能导入；
+2.2，方法二，执行下列步骤后导入Eclipse：
+     cd ./
+     2.2.1.导入本地meaven仓库：mvn clean install -Denv=dev -DskipTests=true
+     2.2.2.导入Eclipse：mvn clean eclipse:clean eclipse:eclipse -Denv=dev -DskipTests=true
+
+3，编辑接口定义文件：
+3.1，找到文件./ocean-sea-server/src/generator/facades-define.xml，添加<facade>和<method>元素
+   其中<facade>对应接口文件,<method>对应接口内的方法定义
+3.2，generator.xsd是facades-define.xml的规范限定文件；
+3.3，facades-define-min.xml是facades-define.xml的最小集合示例文件；
+
+4，根据编辑好的facades-define.xml生成对应的java文件：
+    执行mvn clean exec:java -DskipGenerator=false
+    相关文件便可生成到对应目录下了。
+
+5，编写业务代码：
+    生成的Facade、Controller、Service文件默认情况下均无需修改，只需要根据也无需要修改Domain文件即可。
+
+
+
+
