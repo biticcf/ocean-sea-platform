@@ -73,6 +73,7 @@ public class KafkaConfig {
 		if (transactionIdPrefix != null) {
 			factory.setTransactionIdPrefix(transactionIdPrefix);
 		}
+		
 		return factory;
 	}
 	
