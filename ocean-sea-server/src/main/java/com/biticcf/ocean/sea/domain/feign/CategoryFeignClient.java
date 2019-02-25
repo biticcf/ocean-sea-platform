@@ -18,7 +18,7 @@ import com.biticcf.ocean.sea.domain.feign.fallback.CategoryFeignClientFallback;
  *
  */
 @FeignClient(name = "categoryFeignClient",
-		     url = "http://127.0.0.1:10001", 
+		     url = "http://127.0.0.1:10002", 
              fallback = CategoryFeignClientFallback.class,
              configuration = {FeignConfig.class})
 public interface CategoryFeignClient {
