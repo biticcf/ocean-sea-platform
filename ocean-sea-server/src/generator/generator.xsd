@@ -4,13 +4,6 @@
             xmlns="http://www.biticcf.com" 
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">
-	<xsd:element name="requestMethods">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref="requestMethod" minOccurs="0" maxOccurs="unbounded"/>
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
 	<xsd:element name="properties">
 		<xsd:complexType>
 			<xsd:all>
@@ -20,18 +13,6 @@
 				<xsd:element ref="template"/>
 				<xsd:element ref="override" minOccurs="0" maxOccurs="1"/>
 				<xsd:element ref="dirs" minOccurs="0" maxOccurs="1"/>
-			</xsd:all>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name="requestMapping">
-		<xsd:complexType>
-			<xsd:all>
-				<xsd:element ref="requestPaths"/>
-				<xsd:element ref="requestMethods" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="requestConsumes" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="requestProduces" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="requestHeaders" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="requestParams" minOccurs="0" maxOccurs="1"/>
 			</xsd:all>
 		</xsd:complexType>
 	</xsd:element>
@@ -46,34 +27,7 @@
 		<xsd:complexType>
 			<xsd:all>
 				<xsd:element ref="name"/>
-				<xsd:element ref="description" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="execGenerator" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="useSwagger" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="annotations" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="requestMapping" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="methods"/>
 			</xsd:all>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name="methods">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref="method" minOccurs="1" maxOccurs="unbounded"/>
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name="exceptions">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref="exception" minOccurs="0" maxOccurs="unbounded"/>
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name="annotations">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref="annotation" minOccurs="0" maxOccurs="unbounded"/>
-			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:element name="models">
@@ -83,26 +37,12 @@
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:element name="requestHeaders">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref="requestHeader" minOccurs="0" maxOccurs="unbounded"/>
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
 	<xsd:element name="dir">
 		<xsd:complexType>
 			<xsd:all>
 				<xsd:element ref="name"/>
 				<xsd:element ref="value"/>
 			</xsd:all>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name="params">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref="param" minOccurs="0" maxOccurs="unbounded"/>
-			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
 	<xsd:element name="dirs">
@@ -116,33 +56,6 @@
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element ref="facade" minOccurs="1" maxOccurs="unbounded"/>
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name="requestProduces">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref="requestProduce" minOccurs="0" maxOccurs="unbounded"/>
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name="param">
-		<xsd:complexType>
-			<xsd:all>
-				<xsd:element ref="name"/>
-				<xsd:element ref="type"/>
-				<xsd:element ref="description" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="nullable" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="defaultValue" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="requestType" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="annotations" minOccurs="0" maxOccurs="1"/>
-			</xsd:all>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name="requestPaths">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref="requestPath" minOccurs="1" maxOccurs="unbounded"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -163,115 +76,32 @@
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:element name="method">
-		<xsd:complexType>
-			<xsd:all>
-				<xsd:element ref="name"/>
-				<xsd:element ref="description" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="execGenerator" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="returnRealType"/>
-				<xsd:element ref="params" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="listResultFlag" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="pagination" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="withTransaction" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="exceptions" minOccurs="0" maxOccurs="1"/>
-				<xsd:element ref="requestMapping"/>
-			</xsd:all>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name="requestConsumes">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref="requestConsume" minOccurs="0" maxOccurs="unbounded"/>
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name="requestParams">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref="requestParam" minOccurs="0" maxOccurs="unbounded"/>
-			</xsd:sequence>
-		</xsd:complexType>
-	</xsd:element>
-	<xsd:element name="annotation" type="simpleClassRestric"/>
-	<xsd:element name="requestType" type="requestTypeEnum"/>
-	<xsd:element name="requestParam" type="xsd:string"/>
-	<xsd:element name="execGenerator" type="xsd:boolean"/>
 	<xsd:element name="template" type="templateRestric"/>
-	<xsd:element name="requestHeader" type="xsd:string"/>
-	<xsd:element name="exception" type="simpleClassRestric"/>
-	<xsd:element name="listResultFlag" type="xsd:boolean"/>
-	<xsd:element name="withTransaction" type="xsd:boolean"/>
-	<xsd:element name="returnRealType" type="typeRestric"/>
 	<xsd:element name="dirRef" type="xsd:string"/>
-	<xsd:element name="description" type="xsd:string"/>
-	<xsd:element name="type" type="typeRestric"/>
 	<xsd:element name="value" type="pathRestric"/>
-	<xsd:element name="requestMethod" type="requestMethodEnum"/>
 	<xsd:element name="company" type="companyRestric"/>
-	<xsd:element name="pagination" type="xsd:boolean"/>
-	<xsd:element name="nullable" type="xsd:boolean"/>
 	<xsd:element name="name" type="nameRestric"/>
-	<xsd:element name="defaultValue" type="xsd:string"/>
-	<xsd:element name="requestProduce" type="xsd:string"/>
 	<xsd:element name="override" type="xsd:boolean"/>
 	<xsd:element name="scope" type="scopeRestric"/>
-	<xsd:element name="useSwagger" type="xsd:boolean"/>
-	<xsd:element name="requestConsume" type="xsd:string"/>
-	<xsd:element name="requestPath" type="xsd:string"/>
-	<xsd:simpleType name="requestMethodEnum">
-		<!-- 限定 -->
-		<xsd:restriction base="xsd:string">
-			<!-- 枚举的类型 -->
-			<xsd:enumeration value="GET" />
-			<xsd:enumeration value="POST" />
-			<xsd:enumeration value="PUT" />
-			<xsd:enumeration value="DELETE" />
-			<xsd:enumeration value="HEAD" />
-			<xsd:enumeration value="TRACE" />
-			<xsd:enumeration value="OPTIONS" />
-			<xsd:enumeration value="" />
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="requestTypeEnum">
-		<!-- 限定 -->
-		<xsd:restriction base="xsd:string">
-			<!-- 枚举的类型 -->
-			<xsd:enumeration value="RequestParam" />
-			<xsd:enumeration value="PathVariable" />
-			<xsd:enumeration value="RequestBody" />
-			<xsd:enumeration value="RequestHeader" />
-			<xsd:enumeration value="" />
-		</xsd:restriction>
-	</xsd:simpleType>
+	
 	<xsd:simpleType name="nameRestric">
 		<xsd:restriction base="xsd:string">
-			<xsd:pattern  value="[a-zA-Z][a-zA-Z0-9]+" />
+			<xsd:pattern  value="[a-zA-Z][a-zA-Z0-9]*" />
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="companyRestric">
 		<xsd:restriction base="xsd:string">
-			<xsd:pattern  value="[a-z][a-z0-9]+" />
+			<xsd:pattern  value="[a-z][a-z0-9]*" />
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="scopeRestric">
 		<xsd:restriction base="xsd:string">
-			<xsd:pattern  value="[a-z][a-z0-9]+" />
+			<xsd:pattern  value="[a-z][a-z0-9]*" />
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="templateRestric">
 		<xsd:restriction base="xsd:string">
-			<xsd:pattern  value="[a-z][a-z0-9]+" />
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="simpleClassRestric">
-		<xsd:restriction base="xsd:string">
-			<xsd:pattern  value="[a-z][a-zA-Z0-9.]+" />
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="typeRestric">
-		<xsd:restriction base="xsd:string">
-			<xsd:pattern  value="[a-z][a-zA-Z0-9.&lt;&gt;]+" />
+			<xsd:pattern  value="[a-z][a-z0-9]*" />
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="pathRestric">
