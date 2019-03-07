@@ -176,6 +176,11 @@
 				<artifactId>springfox-swagger-ui</artifactId>
 				<version>${springfox-swagger-ui.version}</version>
 			</dependency>
+			<dependency>
+  				<groupId>com.github.xiaoymin</groupId>
+  				<artifactId>swagger-bootstrap-ui</artifactId>
+  				<version>1.9.0</version>
+			</dependency>
 			
 			<dependency>
 				<groupId>aopalliance</groupId>
