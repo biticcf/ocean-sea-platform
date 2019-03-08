@@ -50,6 +50,7 @@
 		<mybatis.spring.boot.starter.version>2.0.0</mybatis.spring.boot.starter.version>
 		<mybatis.spring.version>2.0.0</mybatis.spring.version>
 		<mybatis.version>3.5.0</mybatis.version>
+		<druid.version>1.1.14</druid.version>
 		
 		<!-- fastjson -->
 		<fastjson.version>1.2.51</fastjson.version>
@@ -193,9 +194,9 @@
             	<version>3.7</version>
         	</dependency>
         	<dependency>
-            	<groupId>com.mchange</groupId>
-            	<artifactId>c3p0</artifactId>
-            	<version>0.9.5.2</version>
+            	<groupId>com.alibaba</groupId>
+            	<artifactId>druid</artifactId>
+            	<version>${druid.version}</version>
         	</dependency>
         	
         	<!-- 用于序列化 -->

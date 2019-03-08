@@ -32,8 +32,8 @@ spring:
     default-timeout: 600
     rollback-on-commit-failure: true
   datasource: 
-    # 使用c3p0数据库连接池
-    type: com.mchange.v2.c3p0.ComboPooledDataSource
+    # 使用druid数据库连接池
+    type: com.alibaba.druid.pool.DruidDataSource
   data: 
     elasticsearch: 
       cluster-nodes: 127.0.0.1:9200
@@ -140,23 +140,33 @@ redis:
 datasource:
   # Master数据源配置
   master: 
-    driverClass: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql:replication://${C3P0.HOST:localhost}:${C3P0.PORT:3306}/${C3P0.DATABASE:goods}?useSSL=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=true&serverTimezone=GMT%2B8
-    user: ${C3P0.USER:demotest}
-    password: ${C3P0.PASSWORD:demotest}
-    minPoolSize: ${C3P0.MINPOOLSIZE:4}
-    maxPoolSize: ${C3P0.MAXPOOLSIZE:20}
-    maxIdleTime: 1800000
-    acquireIncrement: ${C3P0.ACQUIREINCREMENT:2}
-    maxStatements: 0
-    initialPoolSize: ${C3P0.INITIALPOOLSIZE:4}
-    idleConnectionTestPeriod: 60
-    acquireRetryAttempts: 5
-    acquireRetryDelay: 1000
-    breakAfterAcquireFailure: false
-    testConnectionOnCheckin: true
-    testConnectionOnCheckout: false
-    preferredTestQuery: SELECT 1 FROM DUAL
+    name: master
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:replication://${DRUID.HOST:localhost}:${DRUID.PORT:3306}/${DRUID.DATABASE:goods}?useSSL=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=true&serverTimezone=GMT%2B8
+    username: ${DRUID.USERNAME:demotest}
+    password: ${DRUID.PASSWORD:demotest}
+    initialSize: ${DRUID.INITIAL_SIZE:4}
+    maxActive: ${DRUID.MAX_ACTIVE:20}
+    minIdle: ${DRUID.MIN_IDLE:4}
+    maxWait: ${DRUID.MAX_WAIT:30000}
+    useUnfairLock: true
+    notFullTimeoutRetryCount: 2
+    validationQuery: SELECT 1 FROM DUAL
+    validationQueryTimeout: 1 #单位(秒)
+    testOnBorrow: false #申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
+    testOnReturn: false
+    testWhileIdle: true #不影响性能，并且保证安全性
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 100
+    maxPoolPreparedStatementPerConnectionSize: 10
+    queryTimeout: 180 #执行查询超时时间(秒)，与MyBatis保持一致
+    transactionQueryTimeout: 60 #执行事务超时时间
+    timeBetweenEvictionRunsMillis: 60000 #有两个含义： 1) Destroy线程会检测连接的间隔时间2) testWhileIdle的判断依据
+    maxEvictableIdleTimeMillis: 1800000
+    minEvictableIdleTimeMillis: 600000
+    removeAbandoned: true
+    removeAbandonedTimeoutMillis: 300000
+    filters: stat,mergeStat,slf4j,wall
 
 # mybatis配置
 mybatis: 
