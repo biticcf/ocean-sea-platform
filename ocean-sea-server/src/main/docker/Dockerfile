@@ -5,6 +5,7 @@ FROM xxxxx.tencentyun.com/base/java8:1.0
 ARG JAR_FILE
 
 VOLUME ${LOGGING_PATH}
+VOLUME ${TOMCAT_BASE}
 
 CMD [ "/bin/bash", "-c", "java ${DEFAULT_JAVA_OPTS} -Dsjdbc.self.id.generator.worker.id=$RANDOM$RANDOM -Djava.security.egd=file:/dev/./urandom -jar /var/wd/app.jar" ]
 
