@@ -28,12 +28,10 @@ public interface DemoDAO {
 	DemoPo queryById(@Param("id") long id);
 	/**
 	 * 分页查询
-	 * @param offset 查询结果偏移量
-	 * @param limit 查询结果大小
 	 * @return 查询结果
 	 */
-	@Select("SELECT * FROM WD_DEMO_INFO ORDER BY ID DESC LIMIT #{offset}, #{limit}")
-	List<DemoPo> queryList(@Param("offset") int offset, @Param("limit") int limit);
+	@Select("SELECT * FROM WD_DEMO_INFO ORDER BY ID DESC")
+	List<DemoPo> queryList();
 	
 	/**
 	 * 查询总数

@@ -36,12 +36,10 @@ public class DemoDomainRepository {
 	
 	/**
 	 * 分页查询
-	 * @param offset 查询其实偏移量
-	 * @param limit 查询最大数量
 	 * @return 查询结果集
 	 */
-	public List<DemoModel> queryList(int offset, int limit) {
-		List<DemoPo> demoPoList = demoDAO.queryList(offset, limit);
+	public List<DemoModel> queryList() {
+		List<DemoPo> demoPoList = demoDAO.queryList();
 		
 		return (List<DemoModel>) ClazzConverter.converterClass(demoPoList, DemoModel.class);
 	}
