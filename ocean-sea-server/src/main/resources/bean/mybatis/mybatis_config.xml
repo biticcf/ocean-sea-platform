@@ -30,5 +30,6 @@
 		<setting name="jdbcTypeForNull" value="OTHER" />
 		<setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString" />
 		<setting name="logPrefix" value="[mybatis]" />
+		<setting name="logImpl" value="STDOUT_LOGGING" />
 	</settings>
 </configuration>

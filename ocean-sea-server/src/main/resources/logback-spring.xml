@@ -147,13 +147,13 @@
 	<!-- ===== [框架Logger] ===== -->
 	<!-- [框架Logger] 数据访问层 - mybatis -->
 	<logger name="org.mybatis" additivity="false">
-		<level value="ERROR"/>
-		<appender-ref ref="ERROR-APPENDER"/>
+		<level value="WARN"/>
+		<appender-ref ref="DAO-APPENDER"/>
 	</logger>
 	<!-- [框架Logger] 数据访问层 - SQL -->
 	<logger name="java.sql" additivity="false">
-		<level value="ERROR"/>
-		<appender-ref ref="ERROR-APPENDER"/>
+		<level value="WARN"/>
+		<appender-ref ref="DAO-APPENDER"/>
 	</logger>
 	<!-- [应用Logger] Memcache -->
 	<logger name="com.danga">
