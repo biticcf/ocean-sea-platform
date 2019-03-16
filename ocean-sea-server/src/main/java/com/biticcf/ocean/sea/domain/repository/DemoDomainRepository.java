@@ -66,14 +66,6 @@ public class DemoDomainRepository {
 		
 		return new PaginationSupport<>(list, (int) pageInfo.getTotal(), pageInfo.getPageSize(), pageInfo.getPageNum());
 	}
-	
-	/**
-	 * 查询总条数
-	 * @return 结果总条数
-	 */
-	public int queryCount() {
-		return demoDAO.queryCount();
-	}
 	/**
 	 * 保存一条记录
 	 * @param demoModel 对象
