@@ -3,15 +3,19 @@
  */
 package com.biticcf.ocean.sea.domain.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.beyonds.phoenix.mountain.core.common.util.ClazzConverter;
+import com.beyonds.phoenix.mountain.core.common.util.PaginationSupport;
 import com.biticcf.ocean.sea.domain.dao.DemoDAO;
 import com.biticcf.ocean.sea.domain.dao.po.DemoPo;
 import com.biticcf.ocean.sea.model.DemoModel;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 /**
  * @author  DanielCao
@@ -35,13 +39,32 @@ public class DemoDomainRepository {
 	}
 	
 	/**
-	 * 分页查询
+	 * +分页查询
+	 * @param page page值
+	 * @param pageSize pageSize值
 	 * @return 查询结果集
 	 */
-	public List<DemoModel> queryList() {
+	public PaginationSupport<DemoModel> queryList(final int page, final int pageSize) {
+		int p = page, ps = pageSize;
+		if (pageSize <= 0) {
+			ps = PaginationSupport.DEFAULT_PAGESIZE;
+		} else if (pageSize > PaginationSupport.DEFAULT_MAX_PAGESIZE) {
+			ps = PaginationSupport.DEFAULT_MAX_PAGESIZE;
+		}
+		if (page <= 0) {
+			p = 1;
+		}
+		
+		Page<DemoModel> pageInfo = PageHelper.startPage(p, ps);
+		
 		List<DemoPo> demoPoList = demoDAO.queryList();
 		
-		return (List<DemoModel>) ClazzConverter.converterClass(demoPoList, DemoModel.class);
+		List<DemoModel> list = (List<DemoModel>) ClazzConverter.converterClass(demoPoList, DemoModel.class);
+		if (list == null) {
+			list = new ArrayList<>();
+		}
+		
+		return new PaginationSupport<>(list, (int) pageInfo.getTotal(), pageInfo.getPageSize(), pageInfo.getPageNum());
 	}
 	
 	/**

@@ -3,9 +3,6 @@
  */
 package com.biticcf.ocean.sea.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +11,6 @@ import com.beyonds.phoenix.mountain.core.common.util.PaginationSupport;
 import com.biticcf.ocean.sea.domain.support.ConstantContext;
 import com.biticcf.ocean.sea.model.DemoModel;
 import com.biticcf.ocean.sea.model.enums.ResultEnum;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 
 /**
  * @Author: DanielCao
@@ -48,26 +43,7 @@ public class DemoQueryListDomain extends AbstractBaseDomain<PaginationSupport<De
 
 	@Override
 	public WdCallbackResult<PaginationSupport<DemoModel>> executeAction() {
-		int offset = 0, limit = ps;
-		if (ps <= 0) {
-			limit = PaginationSupport.DEFAULT_PAGESIZE;
-		} else if (ps > PaginationSupport.DEFAULT_MAX_PAGESIZE) {
-			limit = PaginationSupport.DEFAULT_MAX_PAGESIZE;
-		} else {
-			limit = ps;
-		}
-		if (p <= 0) {
-			offset = 0;
-		} else {
-			offset = limit * (p - 1);
-		}
-		Page<DemoModel> page = PageHelper.offsetPage(offset, limit);
-		List<DemoModel> resultList = constantContext.getDemoDomainRepository().queryList();
-		if (resultList == null) {
-			resultList = new ArrayList<>();
-		}
-		
-		PaginationSupport<DemoModel> result = new PaginationSupport<>(resultList, (int) page.getTotal(), page.getPageSize(), page.getPageNum());
+		PaginationSupport<DemoModel> result = constantContext.getDemoDomainRepository().queryList(p, ps);
 		
 		return WdCallbackResult.success(ResultEnum.SUCCESS.getCode(), result);
 	}
