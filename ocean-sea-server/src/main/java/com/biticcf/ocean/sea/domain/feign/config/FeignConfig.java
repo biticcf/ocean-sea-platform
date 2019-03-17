@@ -15,11 +15,8 @@ import org.springframework.context.annotation.Scope;
 
 import com.biticcf.ocean.sea.domain.feign.fallback.CategoryFeignClientFallback;
 
-import feign.Feign;
-import feign.Logger;
 import feign.codec.Encoder;
 import feign.form.spring.SpringFormEncoder;
-import feign.hystrix.HystrixFeign;
 
 /**
  * @Author: DanielCao
@@ -30,25 +27,6 @@ import feign.hystrix.HystrixFeign;
 @Import(FeignAutoConfiguration.class)
 @Configuration
 public class FeignConfig {
-	/**
-	 * 定义日志级别
-	 * @return 日志级别
-	 */
-	@Bean
-    public Logger.Level feignLoggerLevel() {
-        return feign.Logger.Level.FULL;
-    }
-    
-	/**
-	 * 定义feign
-	 * @return feign
-	 */
-	@Bean
-    @Scope("prototype")
-    public Feign.Builder feignBuilder() {
-        return HystrixFeign.builder();
-    }
-    
 	/**
 	 * 解决post的url encoder和multipart/form-data文件上传问题
 	 * @param messageConverters 消息编码器集合

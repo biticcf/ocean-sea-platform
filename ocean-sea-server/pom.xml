@@ -170,36 +170,15 @@
             <artifactId>jedis</artifactId>
         </dependency>
         
+        <!-- FeignClient + Hystrix -->
+        <dependency>  
+            <groupId>org.springframework.cloud</groupId>  
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>  
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.github.openfeign</groupId>
-            <artifactId>feign-core</artifactId>
-        </dependency>
-        <dependency>
-			<groupId>io.github.openfeign</groupId>
-			<artifactId>feign-slf4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.github.openfeign</groupId>
-			<artifactId>feign-hystrix</artifactId>
-		</dependency>
-		<!-- 使用Apache HttpClient替换Feign原生httpclient -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-        </dependency>
-        <dependency>
-			<groupId>io.github.openfeign</groupId>
-			<artifactId>feign-httpclient</artifactId>
-		</dependency>
-		<!-- 如果启用feign.compression不加okhttp,FeignAcceptGzipEncodingAutoConfiguration会报错 -->
-		<dependency>
-			<groupId>com.squareup.okhttp3</groupId>
-			<artifactId>okhttp</artifactId>
-		</dependency>
         
         <!-- 解决Feign的 application/x-www-form-urlencoded和multipart/form-data类型 -->
         <dependency>
