@@ -170,12 +170,39 @@ datasource:
 
 # mybatis配置
 mybatis: 
-  config-location: classpath:bean/mybatis/mybatis_config.xml
-  mapper-locations: classpath:/bean/mybatis/mapping/*.xml
+  # config-location: classpath:bean/mybatis/mybatis_config.xml
+  # mapper-locations: classpath:/bean/mybatis/mapping/*.xml
   type-aliases-package: com.biticcf.ocean.sea.domain.dao.po
   type-dao-package: com.biticcf.ocean.sea.domain.dao
   # type-handlers-package: com.example.typehandler
   executorType: REUSE
+  configuration: 
+    cache-enabled: true
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
+    multiple-result-sets-enabled: true
+    use-column-label: true
+    use-generated-keys: true
+    auto-mapping-behavior: FULL
+    default-executor-type: REUSE
+    default-statement-timeout: 180
+    map-underscore-to-camel-case: true
+    default-fetch-size: 200
+    local-cache-scope: SESSION
+    jdbc-type-for-null: OTHER
+    lazy-load-trigger-methods: equals,clone,hashCode,toString
+    log-prefix: [mybatis]
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  interceptors: 
+    page-interceptor: 
+      impl: com.github.pagehelper.PageInterceptor
+      helper-dialect: mysql
+      offset-as-page-num: false
+      row-bounds-with-count: true
+      page-size-zero: false
+      reasonable: false
+      support-methods-arguments: false
+      return-page-info: none
 
 # Perform Framework
 performframework: 

@@ -3,8 +3,11 @@
  */
 package com.biticcf.ocean.sea.domain.config;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
+import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.slf4j.Logger;
@@ -26,6 +29,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import com.beyonds.phoenix.mountain.core.common.service.WdServiceTemplate;
 import com.beyonds.phoenix.mountain.core.common.service.WdServiceTemplateImpl;
+import com.github.pagehelper.PageInterceptor;
 
 /**
  * @Author: DanielCao
@@ -94,5 +98,27 @@ public class DatasourceConfig {
 		defaultTransactionDefinition.setTimeout(60); // 秒钟
 	    
 	    return new TransactionTemplate(transactionManager, defaultTransactionDefinition);
+	}
+	
+	/**
+	 * +定义分页插件
+	 * @param pageProperties
+	 * @return Interceptor
+	 */
+	@Bean
+	public Interceptor getInterceptor(@Qualifier("pageProperties")Properties pageProperties) {
+		PageInterceptor pageInterceptor = new PageInterceptor();
+		pageInterceptor.setProperties(pageProperties);
+		
+		return pageInterceptor;
+	}
+	/**
+	 * +定义分页插件属性
+	 * @return Properties
+	 */
+	@Bean("pageProperties")
+	@ConfigurationProperties(prefix = "mybatis.interceptors.page-interceptor")
+	public Properties pageProperties() {
+		return new Properties();
 	}
 }

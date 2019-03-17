@@ -48,7 +48,7 @@ public interface DemoDAO {
 	@Select("SELECT * FROM WD_DEMO_INFO WHERE ID = #{id}")
 	DemoPo queryById(@Param("id") long id);
 	/**
-	 * 分页查询
+	 * +查询列表
 	 * @return 查询结果
 	 */
 	@Options(useCache = true, flushCache = Options.FlushCachePolicy.FALSE, timeout = 60000)
@@ -56,7 +56,7 @@ public interface DemoDAO {
 	@ResultMap(value = {"demoMap"})
 	List<DemoPo> queryList();
 	/**
-	 * 保存一条记录
+	 * +保存一条记录
 	 * @param demoPo 数据记录
 	 * @return 保存成功条数
 	 */
