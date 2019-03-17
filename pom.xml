@@ -146,8 +146,8 @@
             </dependency>
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper</artifactId>
-                <version>5.1.8</version>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>1.2.10</version>
             </dependency>
             
             <!-- 解决Feign的 application/x-www-form-urlencoded和multipart/form-data类型 -->

@@ -193,16 +193,15 @@ mybatis:
     lazy-load-trigger-methods: equals,clone,hashCode,toString
     log-prefix: [mybatis]
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  interceptors: 
-    page-interceptor: 
-      impl: com.github.pagehelper.PageInterceptor
-      helper-dialect: mysql
-      offset-as-page-num: false
-      row-bounds-with-count: true
-      page-size-zero: false
-      reasonable: false
-      support-methods-arguments: false
-      return-page-info: none
+
+pagehelper: 
+  helper-dialect: mysql
+  offset-as-page-num: false
+  row-bounds-with-count: true
+  page-size-zero: false
+  reasonable: false
+  support-methods-arguments: false
+  return-page-info: none
 
 # Perform Framework
 performframework: 
