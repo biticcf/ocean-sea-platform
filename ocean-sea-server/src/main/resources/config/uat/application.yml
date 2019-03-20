@@ -187,8 +187,8 @@ mybatis:
       local-cache-scope: SESSION
       jdbc-type-for-null: OTHER
       lazy-load-trigger-methods: equals,clone,hashCode,toString
-      log-prefix: [mybatis]
-      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+      log-prefix: mybatis.sql.
+      log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
     pagehelper: 
       helper-dialect: mysql
       offset-as-page-num: false

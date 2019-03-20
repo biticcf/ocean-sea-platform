@@ -155,6 +155,13 @@
 		<level value="WARN"/>
 		<appender-ref ref="DAO-APPENDER"/>
 	</logger>
+	<!-- [框架Logger] 数据访问层 - SQL -->
+	<!-- 输出Mybatis执行的sql到控制台和dao日志文件[需要DEBUG级别] -->
+	<logger name="mybatis.sql" additivity="false">
+		<level value="WARN"/>
+		<appender-ref ref="STDOUT-APPENDER"/>
+		<appender-ref ref="DAO-APPENDER"/>
+	</logger>
 	<!-- [应用Logger] Memcache -->
 	<logger name="com.danga">
 		<level value="ERROR"/>
