@@ -126,7 +126,7 @@ public class DatasourceConfig {
 	 * @throws Exception Exception
 	 */
 	@Bean(name = "sqlSessionFactory")
-	public SqlSessionFactory sqlSessionFactorySecond(
+	public SqlSessionFactory sqlSessionFactory(
 			@Qualifier("dataSource") DataSource dataSource,
 			@Qualifier("mybatisProperties") MybatisProperties properties,
 			ResourceLoader resourceLoader,
