@@ -133,9 +133,14 @@ public class DatasourceConfig {
 			ObjectProvider<List<ConfigurationCustomizer>> configurationCustomizersProvider,
 			ObjectProvider<Interceptor[]> interceptorsProvider,
 			@Qualifier("pageInterceptor") Interceptor pageInterceptor,
-			ObjectProvider<DatabaseIdProvider> databaseIdProvider) throws Exception {
+			ObjectProvider<DatabaseIdProvider> databaseIdProvider,
+			@Qualifier("manualManagedTransactionFactory") ManualManagedTransactionFactory manualManagedTransactionFactory) throws Exception {
 		SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
 		factory.setDataSource(dataSource);
+		
+		if (manualManagedTransactionFactory != null) {
+			factory.setTransactionFactory(manualManagedTransactionFactory);
+		}
         
         factory.setVfs(SpringBootVFS.class);
         if (StringUtils.hasText(properties.getConfigLocation())) {
@@ -174,6 +179,15 @@ public class DatasourceConfig {
         }
         
         return factory.getObject();
+	}
+	
+	/**
+	 * +自定义事务管理工厂,用以管理事务的生命周期
+	 * @return TransactionFactory
+	 */
+	@Bean(name = "manualManagedTransactionFactory")
+	public ManualManagedTransactionFactory manualManagedTransactionFactory() {
+		return new ManualManagedTransactionFactory();
 	}
 	
 	/**
