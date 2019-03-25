@@ -121,7 +121,9 @@ public class DatasourceConfig {
 	 * @param resourceLoader resourceLoader
 	 * @param configurationCustomizersProvider configurationCustomizersProvider
 	 * @param interceptorsProvider interceptorsProvider
+	 * @param pageInterceptor pageInterceptor
 	 * @param databaseIdProvider databaseIdProvider
+	 * @param manualManagedTransactionFactory manualManagedTransactionFactory
 	 * @return SqlSessionFactory
 	 * @throws Exception Exception
 	 */
@@ -138,6 +140,7 @@ public class DatasourceConfig {
 		SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
 		factory.setDataSource(dataSource);
 		
+		// 自定义事务处理器
 		if (manualManagedTransactionFactory != null) {
 			factory.setTransactionFactory(manualManagedTransactionFactory);
 		}
