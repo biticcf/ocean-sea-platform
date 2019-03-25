@@ -45,14 +45,14 @@ public interface DemoDAO {
 			@Result(property = "updateTime", column = "UPDATE_TIME", javaType = Date.class, jdbcType = JdbcType.TIMESTAMP),
 			@Result(property = "version", column = "VERSION", javaType = Integer.class, jdbcType = JdbcType.INTEGER)
 	})
-	@Select("SELECT * FROM WD_DEMO_INFO WHERE ID = #{id}")
+	@Select("SELECT * FROM `WD_DEMO_INFO` WHERE `ID` = #{id}")
 	DemoPo queryById(@Param("id") long id);
 	/**
 	 * +查询列表
 	 * @return 查询结果
 	 */
 	@Options(useCache = true, flushCache = Options.FlushCachePolicy.FALSE, timeout = 60000)
-	@Select("SELECT * FROM WD_DEMO_INFO ORDER BY ID DESC")
+	@Select("SELECT * FROM `WD_DEMO_INFO` ORDER BY `ID` DESC")
 	@ResultMap(value = {"demoMap"})
 	List<DemoPo> queryList();
 	/**
