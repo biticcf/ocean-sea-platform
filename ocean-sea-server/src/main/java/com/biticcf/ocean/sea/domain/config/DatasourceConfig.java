@@ -32,6 +32,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.lang.Nullable;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
@@ -136,7 +137,7 @@ public class DatasourceConfig {
 			ObjectProvider<Interceptor[]> interceptorsProvider,
 			@Qualifier("pageInterceptor") Interceptor pageInterceptor,
 			ObjectProvider<DatabaseIdProvider> databaseIdProvider,
-			@Qualifier("manualManagedTransactionFactory") ManualManagedTransactionFactory manualManagedTransactionFactory) throws Exception {
+			@Qualifier("manualManagedTransactionFactory") @Nullable ManualManagedTransactionFactory manualManagedTransactionFactory) throws Exception {
 		SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
 		factory.setDataSource(dataSource);
 		

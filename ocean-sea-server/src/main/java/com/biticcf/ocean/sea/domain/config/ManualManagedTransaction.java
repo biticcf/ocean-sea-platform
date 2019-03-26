@@ -18,8 +18,6 @@ import org.springframework.jdbc.datasource.ConnectionHolder;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
-import com.beyonds.phoenix.mountain.core.common.service.TransStatusHolder;
-
 /**
  * @Author: Daniel.Cao
  * @Date:   2019年3月25日
@@ -47,8 +45,7 @@ public class ManualManagedTransaction implements Transaction {
 			openConnection();
 		}
 		
-		boolean withTrans = TransStatusHolder.getTransStatus();
-		if (!withTrans) {
+		if (!this.isConnectionTransactional) {
 			this.connection.setReadOnly(true);
 		} else {
 			this.connection.setReadOnly(false);
@@ -80,11 +77,6 @@ public class ManualManagedTransaction implements Transaction {
 	
 	@Override
 	public void commit() throws SQLException {
-		boolean withTrans = TransStatusHolder.getTransStatus();
-		if (!withTrans) {
-			return;
-		}
-		
 		if (this.connection != null && !this.isConnectionTransactional && !this.autoCommit) {
 		    LOGGER.debug(() -> "Committing JDBC Connection [" + this.connection + "]");
 		    
@@ -94,11 +86,6 @@ public class ManualManagedTransaction implements Transaction {
 
 	@Override
 	public void rollback() throws SQLException {
-		boolean withTrans = TransStatusHolder.getTransStatus();
-		if (!withTrans) {
-			return;
-		}
-		
 		if (this.connection != null && !this.isConnectionTransactional && !this.autoCommit) {
 		    LOGGER.debug(() -> "Rolling back JDBC Connection [" + this.connection + "]");
 		    
