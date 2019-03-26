@@ -47,6 +47,13 @@ public class ManualManagedTransaction implements Transaction {
 			openConnection();
 		}
 		
+		boolean withTrans = TransStatusHolder.getTransStatus();
+		if (!withTrans) {
+			this.connection.setReadOnly(true);
+		} else {
+			this.connection.setReadOnly(false);
+		}
+		
 		return this.connection;
 	}
 	
@@ -62,13 +69,6 @@ public class ManualManagedTransaction implements Transaction {
 		this.connection = DataSourceUtils.getConnection(this.dataSource);
 		this.autoCommit = this.connection.getAutoCommit();
 		this.isConnectionTransactional = DataSourceUtils.isConnectionTransactional(this.connection, this.dataSource);
-		
-		boolean withTrans = TransStatusHolder.getTransStatus();
-		if (!withTrans) {
-			this.connection.setReadOnly(true);
-		} else {
-			this.connection.setReadOnly(false);
-		}
 		
 		LOGGER.debug(() ->
 		        "JDBC Connection ["
@@ -101,6 +101,7 @@ public class ManualManagedTransaction implements Transaction {
 		
 		if (this.connection != null && !this.isConnectionTransactional && !this.autoCommit) {
 		    LOGGER.debug(() -> "Rolling back JDBC Connection [" + this.connection + "]");
+		    
 		    this.connection.rollback();
 		}
 	}
@@ -108,8 +109,6 @@ public class ManualManagedTransaction implements Transaction {
 	@Override
 	public void close() {
 		DataSourceUtils.releaseConnection(this.connection, this.dataSource);
-		
-		TransStatusHolder.removeTransStatus();
 	}
 
 	@Override
