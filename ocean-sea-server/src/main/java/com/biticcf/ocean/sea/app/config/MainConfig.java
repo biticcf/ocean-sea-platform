@@ -7,16 +7,8 @@ import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Controller;
-
-import com.beyonds.phoenix.mountain.core.common.framework.PerformFramework;
-import com.biticcf.ocean.sea.domain.config.DatasourceConfig;
-import com.biticcf.ocean.sea.domain.config.KafkaConfig;
-import com.biticcf.ocean.sea.domain.config.RedisCacheConfig;
-import com.biticcf.ocean.sea.web.config.Swagger2Configuration;
-import com.biticcf.ocean.sea.web.config.WebMvcConfiguration;
 
 /**
  * @Author: DanielCao
@@ -26,14 +18,6 @@ import com.biticcf.ocean.sea.web.config.WebMvcConfiguration;
  */
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
 @Configuration
-@Import(value = {
-		PerformFramework.class, 
-		DatasourceConfig.class,
-		RedisCacheConfig.class,
-		KafkaConfig.class,
-		WebMvcConfiguration.class,
-		Swagger2Configuration.class
-		})
 @ComponentScan(
         value = {"com.biticcf.ocean.sea"},
         excludeFilters = {
