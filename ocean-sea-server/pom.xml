@@ -468,7 +468,7 @@
         			<dependency>
             			<groupId>org.ow2.asm</groupId>
             			<artifactId>asm</artifactId>
-            			<version>${asm.version}</version>
+            			<version>6.1.1</version>
         			</dependency>
                 </dependencies>
                 <configuration>
