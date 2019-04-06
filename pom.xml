@@ -33,11 +33,11 @@
 		<java.version>8</java.version>
 		
 		<!-- 定义版本号 -->
-		<ocean-sea.version>1.0.0.20190221</ocean-sea.version>
+		<ocean-sea.version>1.0.0.20190406</ocean-sea.version>
 		<!-- 根据XML接口定义自动生成代码 -->
 		<skipGenerator>true</skipGenerator>
 		<!-- phoenix.mountain核心组件版本 -->
-		<phoenix-mountain.version>1.0.0.20190326</phoenix-mountain.version>
+		<phoenix-mountain.version>1.0.0.20190406</phoenix-mountain.version>
 		
 		<!-- spring platform -->
 		<spring.boot.version>2.1.3.RELEASE</spring.boot.version>
@@ -340,14 +340,15 @@
         			<cleanupDaemonThreads>false</cleanupDaemonThreads>
         			<arguments>
             			<argument>dir=${basedir}</argument>
-            			<argument>file=/src/generator/facades-define-min.xml</argument>
+            			<argument>file=/src/generator/facades-define.xml</argument>
         			</arguments>
-        			<mainClass>com.biticcf.flying.hill.generator.MainGenerator</mainClass>
+        			<mainClass>com.beyonds.phoenix.mountain.generator.MainGenerator</mainClass>
     			</configuration>
     			<dependencies>
     				<dependency>
-    					<groupId>com.beyonds.phoenix.mountain</groupId>
+						<groupId>com.beyonds.phoenix.mountain</groupId>
 						<artifactId>phoenix-mountain-generator</artifactId>
+						<version>${phoenix-mountain.version}</version>
 					</dependency>
     			</dependencies>
 			</plugin>
