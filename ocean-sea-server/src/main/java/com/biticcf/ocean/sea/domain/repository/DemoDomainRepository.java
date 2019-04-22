@@ -48,8 +48,8 @@ public class DemoDomainRepository {
 		int p = page, ps = pageSize;
 		if (pageSize <= 0) {
 			ps = PaginationSupport.DEFAULT_PAGESIZE;
-		} else if (pageSize > PaginationSupport.DEFAULT_MAX_PAGESIZE) {
-			ps = PaginationSupport.DEFAULT_MAX_PAGESIZE;
+		} else if (pageSize > PaginationSupport.getMaxPageSize()) {
+			ps = PaginationSupport.getMaxPageSize();
 		}
 		if (page <= 0) {
 			p = 1;
