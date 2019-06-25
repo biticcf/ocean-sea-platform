@@ -3,6 +3,7 @@ FROM xxxxx.tencentyun.com/base/java8:1.0
 
 #定义变量
 ARG JAR_FILE
+ARG VERSION_FILE
 
 VOLUME ${LOGGING_PATH}
 VOLUME ${TOMCAT_BASE}
@@ -11,3 +12,4 @@ CMD [ "/bin/bash", "-c", "java ${DEFAULT_JAVA_OPTS} -Dsjdbc.self.id.generator.wo
 
 # 拷贝jar
 COPY ./lib/${JAR_FILE} /var/wd/app.jar
+COPY ./${VERSION_FILE} /var/wd/${VERSION_FILE}

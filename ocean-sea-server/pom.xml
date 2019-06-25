@@ -439,6 +439,7 @@
         			
         			<buildArgs>
 						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+						<VERSION_FILE>${git.version.name}</VERSION_FILE>
 					</buildArgs>
 					
         			<repository>${docker.repostory}/${docker.registry.name}/${docker.image.name}</repository>
@@ -582,7 +583,7 @@
                     <prefix>git</prefix>
                     <verbose>false</verbose>
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                    <generateGitPropertiesFilename>${project.build.directory}/${project.name}/RELEASE.VERSION</generateGitPropertiesFilename>
+                    <generateGitPropertiesFilename>${project.build.directory}/${project.name}/${git.version.name}</generateGitPropertiesFilename>
                     <includeOnlyProperties>git.commit.id</includeOnlyProperties>
                     <gitDescribe>
                         <skip>false</skip>

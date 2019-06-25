@@ -30,6 +30,9 @@
 		<docker.registry.name>myregistry</docker.registry.name>
 		<docker.image.name>sea</docker.image.name>
 		
+		<!-- git.version.name -->
+		<git.version.name>RELEASE.VERSION</git.version.name>
+		
 		<java.version>8</java.version>
 		
 		<!-- 定义版本号 -->
