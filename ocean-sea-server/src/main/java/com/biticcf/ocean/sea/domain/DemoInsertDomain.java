@@ -49,7 +49,12 @@ public class DemoInsertDomain extends AbstractBaseDomain<DemoModel> {
 	}
 
 	@Override
-	public void executeAfter() {
-		//
+	public void executeAfterSuccess() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void executeAfterFailure(Throwable e) {
+		// TODO Auto-generated method stub
 	}
 }

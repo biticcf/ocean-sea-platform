@@ -49,7 +49,12 @@ public class DemoQueryListDomain extends AbstractBaseDomain<PaginationSupport<De
 	}
 
 	@Override
-	public void executeAfter() {
-		//
+	public void executeAfterSuccess() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void executeAfterFailure(Throwable e) {
+		// TODO Auto-generated method stub
 	}
 }
