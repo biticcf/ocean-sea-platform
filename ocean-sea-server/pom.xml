@@ -16,12 +16,12 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>com.beyonds.phoenix.mountain</groupId>
-			<artifactId>phoenix-mountain-core</artifactId>
+			<groupId>com.github.biticcf</groupId>
+			<artifactId>mountain-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.beyonds.phoenix.mountain</groupId>
-			<artifactId>phoenix-mountain-shackle</artifactId>
+			<groupId>com.github.biticcf</groupId>
+			<artifactId>mountain-shackle</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.biticcf.ocean.sea</groupId>
