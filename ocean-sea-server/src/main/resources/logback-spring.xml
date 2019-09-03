@@ -130,7 +130,7 @@
 	<!-- ===================================================================== -->
 	<!-- ===== [公共Logger] ===== -->
 	<!-- [公共Logger] 性能 - service性能  -->
-	<logger name="com.beyonds.phoenix.mountain.core.common.aop.PerformanceMonitorInterceptor" additivity="false">
+	<logger name="com.github.biticcf.mountain.core.common.aop.PerformanceMonitorInterceptor" additivity="false">
 		<level value="INFO"/>
 		<appender-ref ref="PERF-APPENDER"/>
 	</logger>

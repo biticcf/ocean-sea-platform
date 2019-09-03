@@ -13,9 +13,9 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.validation.annotation.Validated;
 
-import com.beyonds.phoenix.mountain.core.common.model.WdBaseModel;
-import com.beyonds.phoenix.mountain.core.common.validator.GroupCreate;
-import com.beyonds.phoenix.mountain.core.common.validator.GroupUpdate;
+import com.github.biticcf.mountain.core.common.model.WdBaseModel;
+import com.github.biticcf.mountain.core.common.validator.GroupCreate;
+import com.github.biticcf.mountain.core.common.validator.GroupUpdate;
 
 /**
  * @author  DanielCao

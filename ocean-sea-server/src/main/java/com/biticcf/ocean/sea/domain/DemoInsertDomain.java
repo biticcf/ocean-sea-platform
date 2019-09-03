@@ -6,10 +6,10 @@ package com.biticcf.ocean.sea.domain;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.beyonds.phoenix.mountain.core.common.result.WdCallbackResult;
 import com.biticcf.ocean.sea.domain.support.ConstantContext;
 import com.biticcf.ocean.sea.model.DemoModel;
 import com.biticcf.ocean.sea.model.enums.ResultEnum;
+import com.github.biticcf.mountain.core.common.result.WdCallbackResult;
 
 /**
  * @Author: DanielCao

@@ -41,8 +41,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-import com.beyonds.phoenix.mountain.core.common.service.WdServiceTemplate;
-import com.beyonds.phoenix.mountain.core.common.service.WdServiceTemplateImpl;
+import com.github.biticcf.mountain.core.common.service.WdServiceTemplate;
+import com.github.biticcf.mountain.core.common.service.WdServiceTemplateImpl;
 import com.github.pagehelper.PageInterceptor;
 import com.github.pagehelper.autoconfigure.PageHelperProperties;
 

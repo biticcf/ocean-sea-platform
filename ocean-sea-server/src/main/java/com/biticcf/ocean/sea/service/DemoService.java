@@ -1,16 +1,16 @@
 
 package com.biticcf.ocean.sea.service;
 
-import com.beyonds.phoenix.mountain.core.common.annotation.ProductCode;
-import com.beyonds.phoenix.mountain.core.common.annotation.ProductLogLevelEnum;
-import com.beyonds.phoenix.mountain.core.common.result.CallResult;
-import com.beyonds.phoenix.mountain.core.common.util.PaginationSupport;
-import com.beyonds.phoenix.mountain.shackle.ShackleDomain;
-import com.beyonds.phoenix.mountain.shackle.ShackleTemplate;
 import com.biticcf.ocean.sea.domain.DemoInsertDomain;
 import com.biticcf.ocean.sea.domain.DemoQueryDomain;
 import com.biticcf.ocean.sea.domain.DemoQueryListDomain;
 import com.biticcf.ocean.sea.model.DemoModel;
+import com.github.biticcf.mountain.core.common.annotation.ProductCode;
+import com.github.biticcf.mountain.core.common.annotation.ProductLogLevelEnum;
+import com.github.biticcf.mountain.core.common.result.CallResult;
+import com.github.biticcf.mountain.core.common.util.PaginationSupport;
+import com.github.biticcf.mountain.shackle.ShackleDomain;
+import com.github.biticcf.mountain.shackle.ShackleTemplate;
 
 /**
  * 

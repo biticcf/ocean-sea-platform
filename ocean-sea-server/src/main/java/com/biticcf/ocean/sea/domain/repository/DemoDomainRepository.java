@@ -9,11 +9,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.beyonds.phoenix.mountain.core.common.util.ClazzConverter;
-import com.beyonds.phoenix.mountain.core.common.util.PaginationSupport;
 import com.biticcf.ocean.sea.domain.dao.DemoDAO;
 import com.biticcf.ocean.sea.domain.dao.po.DemoPo;
 import com.biticcf.ocean.sea.model.DemoModel;
+import com.github.biticcf.mountain.core.common.util.ClazzConverter;
+import com.github.biticcf.mountain.core.common.util.PaginationSupport;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 

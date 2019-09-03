@@ -6,7 +6,7 @@ package com.biticcf.ocean.sea.domain.support;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.beyonds.phoenix.mountain.core.common.lang.Logable;
+import com.github.biticcf.mountain.core.common.lang.Logable;
 
 /**
  * @Author: Daniel.Cao

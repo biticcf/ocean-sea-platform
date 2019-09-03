@@ -12,15 +12,15 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.beyonds.phoenix.mountain.core.common.result.CallResult;
-import com.beyonds.phoenix.mountain.core.common.result.ResultExecutor;
-import com.beyonds.phoenix.mountain.core.common.result.ResultPaginationExecutor;
-import com.beyonds.phoenix.mountain.core.common.result.ReturnResult;
-import com.beyonds.phoenix.mountain.core.common.util.PaginationSupport;
-import com.beyonds.phoenix.mountain.core.common.validator.GroupCreate;
 import com.biticcf.ocean.sea.facade.DemoFacade;
 import com.biticcf.ocean.sea.model.DemoModel;
 import com.biticcf.ocean.sea.service.DemoService;
+import com.github.biticcf.mountain.core.common.result.CallResult;
+import com.github.biticcf.mountain.core.common.result.ResultExecutor;
+import com.github.biticcf.mountain.core.common.result.ResultPaginationExecutor;
+import com.github.biticcf.mountain.core.common.result.ReturnResult;
+import com.github.biticcf.mountain.core.common.util.PaginationSupport;
+import com.github.biticcf.mountain.core.common.validator.GroupCreate;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

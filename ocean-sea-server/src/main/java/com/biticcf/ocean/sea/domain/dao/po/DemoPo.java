@@ -5,7 +5,7 @@ package com.biticcf.ocean.sea.domain.dao.po;
 
 import java.util.Date;
 
-import com.beyonds.phoenix.mountain.core.common.model.WdBaseModel;
+import com.github.biticcf.mountain.core.common.model.WdBaseModel;
 
 /**
  * @author  DanielCao

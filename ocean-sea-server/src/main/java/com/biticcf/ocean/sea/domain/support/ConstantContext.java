@@ -8,8 +8,8 @@ import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.beyonds.phoenix.mountain.core.common.service.ReferContext;
 import com.biticcf.ocean.sea.domain.repository.DemoDomainRepository;
+import com.github.biticcf.mountain.core.common.service.ReferContext;
 
 /**
  * @Author: DanielCao

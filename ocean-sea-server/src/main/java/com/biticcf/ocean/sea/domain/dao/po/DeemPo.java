@@ -5,10 +5,10 @@ package com.biticcf.ocean.sea.domain.dao.po;
 
 import java.util.Date;
 
-import com.beyonds.phoenix.mountain.core.common.model.WdBaseModel;
-import com.beyonds.phoenix.mountain.generator.annotation.ColumnConfig;
-import com.beyonds.phoenix.mountain.generator.annotation.EnuFieldType;
-import com.beyonds.phoenix.mountain.generator.annotation.TableConfig;
+import com.github.biticcf.mountain.core.common.model.WdBaseModel;
+import com.github.biticcf.mountain.generator.annotation.ColumnConfig;
+import com.github.biticcf.mountain.generator.annotation.EnuFieldType;
+import com.github.biticcf.mountain.generator.annotation.TableConfig;
 
 /**
  * @author  DanielCao

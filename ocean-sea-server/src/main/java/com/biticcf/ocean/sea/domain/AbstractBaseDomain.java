@@ -6,8 +6,8 @@ package com.biticcf.ocean.sea.domain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.beyonds.phoenix.mountain.core.common.service.WdServiceCallback;
 import com.biticcf.ocean.sea.domain.support.ConstantContext;
+import com.github.biticcf.mountain.core.common.service.WdServiceCallback;
 
 /**
  * @Author: DanielCao

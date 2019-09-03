@@ -12,7 +12,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-import com.beyonds.phoenix.mountain.shackle.EnableShackleTemplates;
+import com.github.biticcf.mountain.shackle.EnableShackleTemplates;
 import com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;
 
 /**

@@ -29,7 +29,7 @@ import com.alibaba.druid.support.http.WebStatFilter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.beyonds.phoenix.mountain.core.common.service.StringDateConverter;
+import com.github.biticcf.mountain.core.common.service.StringDateConverter;
 
 /**
  * @Author: DanielCao
