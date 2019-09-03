@@ -404,7 +404,7 @@
             			<argument>dir=${basedir}</argument>
             			<argument>file=/src/generator/facades-define.xml</argument>
         			</arguments>
-        			<mainClass>com.beyonds.phoenix.mountain.generator.MainGenerator</mainClass>
+        			<mainClass>com.github.biticcf.generator.MainGenerator</mainClass>
     			</configuration>
     			<dependencies>
     				<dependency>
