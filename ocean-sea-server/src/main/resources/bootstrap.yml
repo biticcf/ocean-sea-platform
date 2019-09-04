@@ -4,7 +4,7 @@ spring:
     # cglib proxy not jdk proxy
     #proxy-target-class: false
   custom: # 自定义属性
-    default-env: ${SERVER_ENVIROMENT:sit}
+    default-env: ${SERVER_ENVIROMENT}
     default-name: application
     default-label: master
     default-profile: ${PROFILES_ACTIVITE:default}
