@@ -28,6 +28,8 @@ spring:
     # Default transaction timeout in seconds.
     default-timeout: 600
     rollback-on-commit-failure: true
+    # 是否启用严格事务(只允许在xxxDomain.executeAction()中执行事务)
+    with-strict-flag: true
   datasource: 
     # 使用druid数据库连接池
     type: com.alibaba.druid.pool.DruidDataSource

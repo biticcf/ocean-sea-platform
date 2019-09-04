@@ -32,7 +32,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.lang.Nullable;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
@@ -43,6 +42,7 @@ import org.springframework.util.StringUtils;
 
 import com.github.biticcf.mountain.core.common.service.WdServiceTemplate;
 import com.github.biticcf.mountain.core.common.service.WdServiceTemplateImpl;
+import com.github.biticcf.mountain.core.common.transaction.ManualManagedTransactionFactory;
 import com.github.pagehelper.PageInterceptor;
 import com.github.pagehelper.autoconfigure.PageHelperProperties;
 
@@ -64,6 +64,8 @@ public class DatasourceConfig {
 	
 	@Value("${spring.datasource.type}")
 	private Class<? extends DataSource> datasourceType;
+	@Value("${spring.transaction.with-strict-flag:false}")
+    private boolean withStrictFlag;
 	
 	/**
 	 * +定义服务模板
@@ -137,12 +139,12 @@ public class DatasourceConfig {
 			ObjectProvider<Interceptor[]> interceptorsProvider,
 			@Qualifier("pageInterceptor") Interceptor pageInterceptor,
 			ObjectProvider<DatabaseIdProvider> databaseIdProvider,
-			@Qualifier("manualManagedTransactionFactory") @Nullable ManualManagedTransactionFactory manualManagedTransactionFactory) throws Exception {
+			@Qualifier("manualManagedTransactionFactory") ManualManagedTransactionFactory manualManagedTransactionFactory) throws Exception {
 		SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
 		factory.setDataSource(dataSource);
 		
 		// 自定义事务处理器
-		if (manualManagedTransactionFactory != null) {
+		if (withStrictFlag && manualManagedTransactionFactory != null) {
 			factory.setTransactionFactory(manualManagedTransactionFactory);
 		}
         
