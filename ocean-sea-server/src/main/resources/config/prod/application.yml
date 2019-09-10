@@ -68,6 +68,19 @@ spring:
       retries: 1
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  task: 
+    execution: 
+      thread-name-prefix: task-
+      pool: 
+        queue-capacity: 10240
+        core-size: 32
+        max-size: 10240
+        allow-core-thread-timeout: true
+        keep-alive: 60s
+    scheduling: 
+      thread-name-prefix: scheduling-
+      pool: 
+        size: 20
 
 server: 
   port: ${SERVER_PORT:10000}
