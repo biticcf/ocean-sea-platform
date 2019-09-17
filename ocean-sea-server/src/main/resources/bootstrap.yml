@@ -166,7 +166,7 @@ ribbon:
 #     NFLoadBalancerPingClassName: com.netflix.loadbalancer.PingUrl
 
 logging: 
-  #path: ${LOGGING.PATH:/var/wd/ocean-sea_logs/}
+  config: classpath:logback-spring.xml
   path: ${LOGGING_PATH}
   register-shutdown-hook: false
 
