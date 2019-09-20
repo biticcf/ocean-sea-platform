@@ -92,6 +92,8 @@ server:
   compression: 
     enabled: true
     mime-types: text/html,text/css,application/json
+  http2: 
+    enabled: true
   tomcat: 
     basedir: ${TOMCAT_BASE}
     background-processor-delay: 30
