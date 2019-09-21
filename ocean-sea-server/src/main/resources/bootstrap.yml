@@ -15,6 +15,7 @@ spring:
     active: composite #启用的配置文件
   main:
     web-application-type: servlet
+    allow-bean-definition-overriding: false
   cloud: 
     refresh: 
       enabled: true
@@ -78,13 +79,14 @@ spring:
     favicon: 
       enabled: false
     formcontent: 
-      putfilter: 
+      filter: 
         enabled: true
     ignore-default-model-on-redirect: true
     log-resolved-exception: false
     throw-exception-if-no-handler-found: true
     servlet: 
       load-on-startup: 4
+      path: /
   resources: 
     add-mappings: true
 
@@ -94,6 +96,7 @@ server:
     mime-types: text/html,text/css,application/json
   http2: 
     enabled: true
+  max-http-header-size: 1MB
   tomcat: 
     basedir: ${TOMCAT_BASE}
     background-processor-delay: 30
