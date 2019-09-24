@@ -7,6 +7,7 @@ BASE_PATH=`cd "$(dirname "$0")"; pwd`
 
 #取外部数据
 XMX_VAR=${Xmx}
+DEVTOOLS_RESTART_ENABLED=${DEVTOOLS.RESTART.ENABLED}
 #去掉结尾的G
 XMX_VAR=${XMX_VAR%%G}
 #数值*3/4,m
@@ -17,13 +18,13 @@ XMS_V=`expr $XMX_VAR \* 3072 / 4`
 XMN_V=`expr $XMX_VAR \* 3072 / 8`
 
 #设置java运行参数
-#DEFAULT_JAVA_OPTS=" -server -Xmx${XMX_V}m -Xms${XMS_V}m -Xmn${XMN_V}m -XX:PermSize=128m -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+DoEscapeAnalysis -XX:+EliminateAllocations -XX:+EliminateLocks "
+#DEFAULT_JAVA_OPTS=" -server -Xmx${XMX_V}m -Xms${XMS_V}m -Xmn${XMN_V}m -XX:PermSize=128m -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+DoEscapeAnalysis -XX:+EliminateAllocations -XX:+EliminateLocks -Dfile.encoding=UTF-8 -Dspring.devtools.restart.enabled=${DEVTOOLS_RESTART_ENABLED}"
 DEFAULT_JAVA_OPTS=" "
 
 if (( XMX_VAR <= 4 )); then
-	DEFAULT_JAVA_OPTS=" -server -Xmx${XMX_V}M  -Xms${XMS_V}M -Xmn${XMN_V}M -XX:MaxMetaspaceSize=256M -XX:MetaspaceSize=256M -XX:+UseConcMarkSweepGC -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+ExplicitGCInvokesConcurrentAndUnloadsClasses -XX:+CMSClassUnloadingEnabled -XX:+ParallelRefProcEnabled -XX:+CMSScavengeBeforeRemark -XX:+DoEscapeAnalysis -XX:+EliminateAllocations -XX:+EliminateLocks -XX:ErrorFile=./tmp/hs_err_pid%p.log   -Xloggc:./tmp/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -verbose:class -XX:+PrintCommandLineFlags -Dfile.encoding=UTF-8"
+	DEFAULT_JAVA_OPTS=" -server -Xmx${XMX_V}M  -Xms${XMS_V}M -Xmn${XMN_V}M -XX:MaxMetaspaceSize=256M -XX:MetaspaceSize=256M -XX:+UseConcMarkSweepGC -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -XX:+ExplicitGCInvokesConcurrentAndUnloadsClasses -XX:+CMSClassUnloadingEnabled -XX:+ParallelRefProcEnabled -XX:+CMSScavengeBeforeRemark -XX:+DoEscapeAnalysis -XX:+EliminateAllocations -XX:+EliminateLocks -XX:ErrorFile=./tmp/hs_err_pid%p.log   -Xloggc:./tmp/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -verbose:class -XX:+PrintCommandLineFlags -Dfile.encoding=UTF-8 -Dspring.devtools.restart.enabled=${DEVTOOLS_RESTART_ENABLED}"
 elif (( XMX_VAR > 4 )); then
-	DEFAULT_JAVA_OPTS=" -server -Xmx${XMX_V}M -Xms${XMS_V}M -XX:MaxMetaspaceSize=512M -XX:MetaspaceSize=512M -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:+ParallelRefProcEnabled -XX:+DoEscapeAnalysis -XX:+EliminateAllocations -XX:+EliminateLocks -XX:ErrorFile=./tmp/hs_err_pid%p.log -Xloggc:./tmp/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -verbose:class -XX:+PrintCommandLineFlags -Dfile.encoding=UTF-8"
+	DEFAULT_JAVA_OPTS=" -server -Xmx${XMX_V}M -Xms${XMS_V}M -XX:MaxMetaspaceSize=512M -XX:MetaspaceSize=512M -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:+ParallelRefProcEnabled -XX:+DoEscapeAnalysis -XX:+EliminateAllocations -XX:+EliminateLocks -XX:ErrorFile=./tmp/hs_err_pid%p.log -Xloggc:./tmp/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -verbose:class -XX:+PrintCommandLineFlags -Dfile.encoding=UTF-8 -Dspring.devtools.restart.enabled=${DEVTOOLS_RESTART_ENABLED}"
 fi
 
 #定义变量:
