@@ -4,13 +4,13 @@ spring:
     # cglib proxy not jdk proxy
     #proxy-target-class: false
   custom: # 自定义属性
-    default-env: ${SERVER_ENVIROMENT}
+    default-env: ${SERVER_ENVIROMENT} #注意：该属性不能有默认值，请从pom.xml更改其值
     default-name: application
-    default-label: master
+    default-label: ${spring.custom.default-env}
     default-profile: ${PROFILES_ACTIVITE:default}
   #config: # 简化版本地数据源配置
   #  name: ${spring.custom.default-name}  
-  #  additional-location: classpath:/config/${spring.custom.default-env}/
+  #  additional-location: classpath:/config/${spring.custom.default-label}/
   profiles: 
     active: composite #启用的配置文件
   main:
@@ -49,15 +49,15 @@ spring:
           - 
             type: native   # 本地数据源配置
             order: 1
-            add-label-locations: true
+            add-label-locations: false
             fail-on-error: false #how to handle exceptions during decryption
             search-locations: 
-              - classpath:/config/${spring.custom.default-env}
+              - classpath:/config/${spring.custom.default-label}/
 #          - 
 #            type: git # git数据源配置
 #            order: 2
 #            uri: http://127.0.0.1:2131/config/config-server.git
-#            search-paths: ocean-sea/${spring.custom.default-env}
+#            search-paths: ocean-sea/${spring.custom.default-label}
 #            skip-ssl-validation: true
 #            force-pull: true
 #            clone-on-start: true
