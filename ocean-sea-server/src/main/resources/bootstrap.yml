@@ -22,6 +22,9 @@ spring:
   main:
     web-application-type: servlet
     allow-bean-definition-overriding: false
+    banner-mode: console
+  mandatory-file-encoding: UTF-8
+  output.ansi.enabled: detect
   cloud: 
     refresh: 
       enabled: true
@@ -69,7 +72,7 @@ spring:
 #            clone-on-start: true
 #            delete-untracked-branches: true
 #            basedir: /var/wd/ocean-sea-config-repo #远程文件本地保存位置
-#            timeout: 5 #单位秒
+#            timeout: 5s #单位秒
 #            #username: user
 #            #password: secret
 #            #proxy:
@@ -95,17 +98,19 @@ spring:
       path: /
   resources: 
     add-mappings: true
+    static-locations: 'classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/'
 
 server: 
   compression: 
     enabled: true
-    mime-types: text/html,text/css,application/json
+    mime-types: 'text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json,application/xml'
+    min-response-size: 1KB
   http2: 
     enabled: true
   max-http-header-size: 1MB
   tomcat: 
     basedir: ${TOMCAT_BASE}
-    background-processor-delay: 30
+    background-processor-delay: 30s
     additional-tld-skip-patterns: 
     port-header: X-Forwarded-Port
     protocol-header: X-Forwarded-Proto
@@ -113,6 +118,8 @@ server:
     redirect-context-root: true
     remote-ip-header: X-Forwarded-For
     uri-encoding: UTF-8
+    resource: 
+      allow-caching: false
     accesslog: 
       enabled: true
       buffered: true

@@ -17,17 +17,18 @@ spring:
       max-request-size: 10MB
       resolve-lazily: false
   jackson: #接口输出端日期格式
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+08:00
+    date-format: 'yyyy-MM-dd HH:mm:ss'
+    time-zone: 'GMT+08:00'
+    joda-date-time-format: 'yyyy-MM-dd HH:mm:ss'
   messages: 
     encoding: UTF-8
   mvc:  #WebMvcAutoConfiguration自动配置
     async: 
-      request-timeout: 30000
+      request-timeout: 60s
     date-format: yyyy-MM-dd HH:mm:ss  #接口输入端日期格式,被StringDateConverter覆盖
   transaction: 
     # Default transaction timeout in seconds.
-    default-timeout: 600
+    default-timeout: 600s
     rollback-on-commit-failure: true
     # 是否启用严格事务(只允许在xxxDomain.executeAction()中执行事务)
     with-strict-flag: true
@@ -50,12 +51,12 @@ spring:
       group-id: demo
       topic: demo
       enable-auto-commit: true
-      auto-commit-interval: 100
+      auto-commit-interval: 100ms
       auto-offset-reset: latest
-      fetch-max-wait: 100
+      fetch-max-wait: 100ms
       fetch-min-size: 100
       max-poll-records: 200
-      heartbeat-interval: 200
+      heartbeat-interval: 2s
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer: 
@@ -86,18 +87,19 @@ spring:
 server: 
   port: ${SERVER_PORT:10000}
   display-name: ${TENANT_GROUP:}ocean-sea
-  connection-timeout: 12000
+  connection-timeout: 120s
   server-header: 
   servlet: 
     context-path: /
   tomcat: 
-    async-timeout: 60000
+    async-timeout: 60s
     max-connections: ${SERVER.TOMCAT.MAX-CONNECTIONS:1024}
     max-threads: ${SERVER.TOMCAT.MAX-THREADS:8}
     accept-count: ${SERVER.TOMCAT.ACCEPT-COUNT:1024}
     min-spare-threads: ${SERVER.TOMCAT.MIN-SPARE-THREADS:2}
     acceptor-thread-count: ${SERVER.TOMCAT.ACCEPTOR-THREAD-COUNT:8}
-    max-http-post-size: 10000000
+    max-http-post-size: 10MB
+    max-swallow-size: 10MB
 
 eureka:
   client:
