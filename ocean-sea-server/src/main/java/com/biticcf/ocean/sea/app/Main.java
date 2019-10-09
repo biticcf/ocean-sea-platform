@@ -13,7 +13,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import com.github.biticcf.mountain.shackle.EnableShackleTemplates;
-import com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;
 
 /**
  * @Author: DanielCao
@@ -24,7 +23,7 @@ import com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;
  *     @Configuration+@EnableAutoConfiguration+@ComponentScan
  * 
  */
-@SpringBootApplication(scanBasePackages = {"com.biticcf.ocean.sea"}, exclude = {PageHelperAutoConfiguration.class})
+@SpringBootApplication(scanBasePackages = {"com.biticcf.ocean.sea"})
 @EnableFeignClients(basePackages = {"com.biticcf.ocean.sea.domain.feign"})
 @EnableShackleTemplates(basePackages = {"com.biticcf.ocean.sea.service"})
 @EnableEurekaClient

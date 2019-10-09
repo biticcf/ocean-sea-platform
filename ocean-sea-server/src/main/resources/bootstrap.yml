@@ -8,9 +8,15 @@ spring:
     default-name: application
     default-label: ${spring.custom.default-env}
     default-profile: ${PROFILES_ACTIVITE:default}
+  autoconfigure: 
+    exclude: com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration
+  banner: 
+    charset: UTF-8
+    location: classpath:banner.txt
   #config: # 简化版本地数据源配置
-  #  name: ${spring.custom.default-name}  
-  #  additional-location: classpath:/config/${spring.custom.default-label}/
+  #  name: ${spring.custom.default-name}
+  #  location: classpath:/config/${spring.custom.default-label}/ #启用云配置的话不能使用该配置,仅用于本地配置有效
+  #  additional-location: classpath:/config/${spring.custom.default-label}/ #云配置有效
   profiles: 
     active: composite #启用的配置文件
   main:
