@@ -221,7 +221,7 @@ mybatis:
 # Perform Framework
 performframework: 
   # 单位ms
-  threshold: 50
+  threshold: 50ms
   # 入口配置
   entrance: 
     # proxyTargetClass: false
