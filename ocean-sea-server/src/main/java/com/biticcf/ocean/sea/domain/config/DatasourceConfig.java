@@ -42,6 +42,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import com.alibaba.druid.wall.WallFilter;
 import com.github.biticcf.mountain.core.common.service.WdServiceTemplate;
 import com.github.biticcf.mountain.core.common.service.WdServiceTemplateImpl;
 import com.github.biticcf.mountain.core.common.transaction.ManualManagedTransactionFactory;
@@ -270,4 +271,14 @@ public class DatasourceConfig {
         
         return interceptor;
 	}
+	
+    /**
+     * +自定义druid的filter
+     * @return filter
+     */
+    @Bean(name = "wallFilter")
+    @ConfigurationProperties(prefix = "druid.filters.wall")
+    public WallFilter wallFilter() {
+        return new WallFilter();
+    }
 }
