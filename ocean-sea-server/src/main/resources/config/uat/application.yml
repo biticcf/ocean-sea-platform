@@ -73,6 +73,7 @@ spring:
   task: 
     execution: 
       thread-name-prefix: task-
+      shutdown.await-termination: false
       pool: 
         queue-capacity: 10240
         core-size: 32
@@ -81,13 +82,14 @@ spring:
         keep-alive: 60s
     scheduling: 
       thread-name-prefix: scheduling-
+      shutdown.await-termination: false
       pool: 
         size: 4
 
 server: 
   port: ${SERVER_PORT:10000}
   display-name: ${TENANT_GROUP:}ocean-sea
-  connection-timeout: 120s
+  connection-timeout: 120s   # 废弃
   server-header: 
   servlet: 
     context-path: /

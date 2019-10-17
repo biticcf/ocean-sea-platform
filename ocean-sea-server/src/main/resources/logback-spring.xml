@@ -5,7 +5,7 @@
 <configuration scan="false" scanPeriod="3600 seconds" debug="false">
 	<!-- logger上下文,LOG_PATH是spring boot内置变量,取值logging.path -->
 	<springProperty scope="context" name="APPLICATION_NAME" source="spring.application.name"/>
-	<springProperty scope="context" name="LOGGING_ROOT" source="logging.path"/>
+	<springProperty scope="context" name="LOGGING_ROOT" source="logging.file.path"/>
 	<property name="PATTERN" value="%d [%t-${PID}][TraceId:%X{traceId}] %-5p %c - [%m]%n" />
 	
 	<!-- <contextName>${APPLICATION_NAME}Log</contextName> -->

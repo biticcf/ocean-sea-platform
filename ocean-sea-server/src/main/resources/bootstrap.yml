@@ -23,6 +23,7 @@ spring:
     web-application-type: servlet
     allow-bean-definition-overriding: false
     banner-mode: console
+    lazy-initialization: true
   mandatory-file-encoding: UTF-8
   output.ansi.enabled: detect
   cloud: 
@@ -87,9 +88,8 @@ spring:
     dispatch-options-request: true
     favicon: 
       enabled: false
-    formcontent: 
-      filter: 
-        enabled: true
+    formcontent.filter.enabled: true
+    hiddenmethod.filter.enabled: true
     ignore-default-model-on-redirect: true
     log-resolved-exception: false
     throw-exception-if-no-handler-found: true
@@ -113,6 +113,7 @@ server:
     background-processor-delay: 30s
     additional-tld-skip-patterns: 
     port-header: X-Forwarded-Port
+    mbeanregistry.enabled: false
     protocol-header: X-Forwarded-Proto
     protocol-header-https-value: https
     redirect-context-root: true
@@ -185,7 +186,7 @@ ribbon:
 
 logging: 
   config: classpath:logback-spring.xml
-  path: ${LOGGING_PATH}
+  file.path: ${LOGGING_PATH}
   register-shutdown-hook: false
 
 # ACTUATOR PROPERTIES
