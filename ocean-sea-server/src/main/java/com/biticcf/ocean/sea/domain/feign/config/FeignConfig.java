@@ -25,7 +25,7 @@ import feign.form.spring.SpringFormEncoder;
  *
  */
 @Import(FeignAutoConfiguration.class)
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class FeignConfig {
 	/**
 	 * 解决post的url encoder和multipart/form-data文件上传问题

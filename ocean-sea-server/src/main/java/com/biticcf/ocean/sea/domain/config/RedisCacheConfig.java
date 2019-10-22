@@ -35,7 +35,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * @Time:   下午1:41:53
  *
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableCaching //启用缓存，这个注解很重要
 public class RedisCacheConfig extends CachingConfigurerSupport {
 	protected static Logger logger = LoggerFactory.getLogger("CACHE.LOG");

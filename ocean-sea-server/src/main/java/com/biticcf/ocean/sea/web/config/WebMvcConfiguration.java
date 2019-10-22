@@ -38,7 +38,7 @@ import com.github.biticcf.mountain.core.common.service.StringDateConverter;
  * @Time:   下午3:35:28
  *
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @Import({ WebMvcAutoConfiguration.class })
 @ComponentScan(
         value = "com.biticcf.ocean.sea.web",

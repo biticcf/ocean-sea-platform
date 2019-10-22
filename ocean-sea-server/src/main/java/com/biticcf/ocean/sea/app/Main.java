@@ -23,7 +23,7 @@ import com.github.biticcf.mountain.shackle.EnableShackleTemplates;
  *     @Configuration+@EnableAutoConfiguration+@ComponentScan
  * 
  */
-@SpringBootApplication(scanBasePackages = {"com.biticcf.ocean.sea"})
+@SpringBootApplication(scanBasePackages = {"com.biticcf.ocean.sea"}, proxyBeanMethods = false)
 @EnableFeignClients(basePackages = {"com.biticcf.ocean.sea.domain.feign"})
 @EnableShackleTemplates(basePackages = {"com.biticcf.ocean.sea.service"})
 @EnableEurekaClient

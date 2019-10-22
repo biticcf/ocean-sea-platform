@@ -56,7 +56,7 @@ import com.github.pagehelper.autoconfigure.PageHelperProperties;
  * 配置自定义数据库连接池和自定义事务模板
  * 单数据源配置
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @MapperScan(basePackages = {"${mybatis.type-dao-package:com.biticcf.ocean.sea.domain.dao}"}, 
             sqlSessionFactoryRef = "sqlSessionFactory")  
 @EnableTransactionManagement

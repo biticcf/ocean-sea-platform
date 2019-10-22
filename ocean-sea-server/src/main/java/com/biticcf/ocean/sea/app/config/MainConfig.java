@@ -17,7 +17,7 @@ import org.springframework.stereotype.Controller;
  *
  */
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ComponentScan(
         value = {"com.biticcf.ocean.sea"},
         excludeFilters = {

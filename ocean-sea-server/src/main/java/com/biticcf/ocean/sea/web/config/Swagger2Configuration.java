@@ -26,7 +26,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @EnableSwagger2
 @ConditionalOnProperty(prefix = "swagger2", name = {"enable"}, havingValue = "true", matchIfMissing = false)
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class Swagger2Configuration implements WebMvcConfigurer {
 	/**
 	 * 定义swagger

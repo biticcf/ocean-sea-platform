@@ -26,7 +26,7 @@ import org.springframework.kafka.support.converter.RecordMessageConverter;
  *
  */
 @EnableKafka
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnExpression("${spring.kafka.enabled:false}")
 @EnableConfigurationProperties(KafkaProperties.class)
 public class KafkaConfig {
