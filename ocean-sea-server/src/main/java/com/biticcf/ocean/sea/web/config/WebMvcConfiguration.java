@@ -3,6 +3,7 @@
  */
 package com.biticcf.ocean.sea.web.config;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,6 +77,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
         //2:添加fastJson的配置信息;
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
+        fastJsonConfig.setCharset(Charset.forName("UTF-8"));
         fastJsonConfig.setSerializerFeatures(
         		SerializerFeature.WriteMapNullValue, 
         		SerializerFeature.WriteDateUseDateFormat, 
