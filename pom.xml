@@ -40,7 +40,7 @@
 		<!-- 根据XML接口定义自动生成代码 -->
 		<skipGenerator>true</skipGenerator>
 		<!-- mountain核心组件版本 -->
-		<mountain.version>2.5.RELEASE</mountain.version>
+		<mountain.version>3.0.RELEASE</mountain.version>
 		
 		<!-- spring platform -->
 		<spring.boot.version>2.2.0.RELEASE</spring.boot.version>
@@ -53,7 +53,7 @@
 		<druid.version>1.1.19</druid.version>
 		
 		<!-- fastjson -->
-		<fastjson.version>1.2.61</fastjson.version>
+		<fastjson.version>1.2.62</fastjson.version>
 		
 		<!-- swagger -->
 		<guava.version>28.0-jre</guava.version>
