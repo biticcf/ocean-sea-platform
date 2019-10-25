@@ -11,8 +11,10 @@ import java.util.Map;
 
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.boot.autoconfigure.http.HttpProperties;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +33,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.github.biticcf.mountain.core.common.service.StringDateConverter;
+import com.github.biticcf.mountain.core.common.service.StringDecoderForHeaderConverter;
 
 /**
  * @Author: DanielCao
@@ -39,6 +42,7 @@ import com.github.biticcf.mountain.core.common.service.StringDateConverter;
  *
  */
 @Configuration(proxyBeanMethods = false)
+@EnableConfigurationProperties({ HttpProperties.class })
 @Import({ WebMvcAutoConfiguration.class })
 @ComponentScan(
         value = "com.biticcf.ocean.sea.web",
@@ -65,6 +69,15 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Bean
     public StringDateConverter dateConverter() {
     	return new StringDateConverter();
+    }
+    
+    /**
+     * +对于header中的中文字进行解码
+     * @return 转换结果
+     */
+    @Bean
+    public StringDecoderForHeaderConverter stringHeaderConverter(HttpProperties httpProperties) {
+    	return new StringDecoderForHeaderConverter(httpProperties.getEncoding().getCharset());
     }
     
     /**
