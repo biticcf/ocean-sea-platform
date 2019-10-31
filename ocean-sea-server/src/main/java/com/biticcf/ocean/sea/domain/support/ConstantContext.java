@@ -4,7 +4,6 @@
 package com.biticcf.ocean.sea.domain.support;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +23,6 @@ public class ConstantContext implements ReferContext {
 	@Autowired
 	private RedisTemplate<String, Object> redisTemplate;
 	@Autowired
-	private ElasticsearchTemplate esTemplate;
-	@Autowired
 	private CommonAsyncService commonAsyncService;
 	@Autowired
 	private EffectAsyncService effectAsyncService;
@@ -38,10 +35,6 @@ public class ConstantContext implements ReferContext {
 		return redisTemplate;
 	}
 	
-	public ElasticsearchTemplate getEsTemplate() {
-		return esTemplate;
-	}
-
 	public CommonAsyncService getCommonAsyncService() {
 		return commonAsyncService;
 	}

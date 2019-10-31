@@ -20,6 +20,7 @@ import org.apache.ibatis.type.JdbcType;
 
 import com.biticcf.ocean.sea.domain.dao.po.DemoPo;
 import com.biticcf.ocean.sea.domain.dao.sqlprovider.DemoSqlProvider;
+import com.github.biticcf.mountain.core.common.service.MountainBaseMapper;
 
 /**
  * @author  DanielCao
@@ -29,7 +30,7 @@ import com.biticcf.ocean.sea.domain.dao.sqlprovider.DemoSqlProvider;
  */
 @CacheNamespace(eviction = LruCache.class, flushInterval = 60000L, size = 1024, readWrite = true)
 @Mapper
-public interface DemoDAO {
+public interface DemoDAO extends MountainBaseMapper<DemoPo> {
 	/**
 	 * 根据id查询
 	 * @param id ID值

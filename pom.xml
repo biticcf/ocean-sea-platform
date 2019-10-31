@@ -40,7 +40,7 @@
 		<!-- 根据XML接口定义自动生成代码 -->
 		<skipGenerator>true</skipGenerator>
 		<!-- mountain核心组件版本 -->
-		<mountain.version>3.1.RELEASE</mountain.version>
+		<mountain.version>4.0.RELEASE</mountain.version>
 		
 		<!-- spring platform -->
 		<spring.boot.version>2.2.0.RELEASE</spring.boot.version>
@@ -139,6 +139,17 @@
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>1.2.12</version>
             </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.2.0</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-jdbc</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
             
             <!-- 解决Feign的 application/x-www-form-urlencoded和multipart/form-data类型 -->
             <dependency>
@@ -221,34 +232,6 @@
             	<artifactId>hessian</artifactId>
             	<version>4.0.51</version>
         	</dependency>
-        	
-        	<!-- ElasticSearch 5.xx，如果需要ElasticSearch 6.xx,去掉该配置即可 -->
-        	<dependency>
-      			<groupId>org.springframework.data</groupId>
-      			<artifactId>spring-data-elasticsearch</artifactId>
-      			<version>3.0.12.RELEASE</version>
-      		</dependency>
-        	<dependency>
-                <groupId>org.elasticsearch</groupId>
-                <artifactId>elasticsearch</artifactId>
-                <version>5.6.10</version>
-            </dependency>
-            <dependency>
-                <groupId>org.elasticsearch.client</groupId>
-                <artifactId>transport</artifactId>
-                <version>5.6.10</version>
-            </dependency>
-            <dependency>
-                <groupId>org.elasticsearch.plugin</groupId>
-                <artifactId>transport-netty4-client</artifactId>
-                <version>5.6.10</version>
-            </dependency>
-            <dependency>
-                <groupId>org.elasticsearch.client</groupId>
-                <artifactId>elasticsearch-rest-client</artifactId>
-                <version>5.6.10</version>
-            </dependency>
-            <!-- ElasticSearch 5.xx End -->
         	
 		</dependencies>
 	</dependencyManagement>

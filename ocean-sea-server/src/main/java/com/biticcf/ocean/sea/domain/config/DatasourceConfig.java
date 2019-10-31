@@ -5,18 +5,17 @@ package com.biticcf.ocean.sea.domain.config;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.scripting.LanguageDriver;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
-import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
-import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +27,7 @@ import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -43,6 +43,14 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import com.alibaba.druid.wall.WallFilter;
+import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
+import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties;
+import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.baomidou.mybatisplus.core.incrementer.IKeyGenerator;
+import com.baomidou.mybatisplus.core.injector.ISqlInjector;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.github.biticcf.mountain.core.common.service.WdServiceTemplate;
 import com.github.biticcf.mountain.core.common.service.WdServiceTemplateImpl;
 import com.github.biticcf.mountain.core.common.transaction.ManualManagedTransactionFactory;
@@ -128,20 +136,27 @@ public class DatasourceConfig {
 	 * @param pageInterceptor pageInterceptor
 	 * @param databaseIdProvider databaseIdProvider
 	 * @param manualManagedTransactionFactory manualManagedTransactionFactory
+	 * @param languageDriversProvider languageDriversProvider
+     * @param applicationContext applicationContext
+     * @param paginationInterceptor paginationInterceptor
+     * 
 	 * @return SqlSessionFactory
 	 * @throws Exception Exception
 	 */
 	@Bean(name = "sqlSessionFactory")
 	public SqlSessionFactory sqlSessionFactory(
 			@Qualifier("dataSource") DataSource dataSource,
-			@Qualifier("mybatisProperties") MybatisProperties properties,
+			@Qualifier("myBatisPlusProperties") MybatisPlusProperties properties,
 			ResourceLoader resourceLoader,
 			ObjectProvider<List<ConfigurationCustomizer>> configurationCustomizersProvider,
 			ObjectProvider<Interceptor[]> interceptorsProvider,
 			@Qualifier("pageInterceptor") Interceptor pageInterceptor,
 			ObjectProvider<DatabaseIdProvider> databaseIdProvider,
-			@Qualifier("manualManagedTransactionFactory") @Nullable ManualManagedTransactionFactory manualManagedTransactionFactory) throws Exception {
-		SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
+			@Qualifier("manualManagedTransactionFactory") @Nullable ManualManagedTransactionFactory manualManagedTransactionFactory, 
+			ObjectProvider<LanguageDriver[]> languageDriversProvider,
+            ApplicationContext applicationContext,
+            @Qualifier("paginationInterceptor") Interceptor paginationInterceptor) throws Exception {
+		MybatisSqlSessionFactoryBean factory = new MybatisSqlSessionFactoryBean();
 		factory.setDataSource(dataSource);
 		
 		// 自定义事务处理器
@@ -153,9 +168,9 @@ public class DatasourceConfig {
         if (StringUtils.hasText(properties.getConfigLocation())) {
           factory.setConfigLocation(resourceLoader.getResource(properties.getConfigLocation()));
         }
-        org.apache.ibatis.session.Configuration configuration = properties.getConfiguration();
+        com.baomidou.mybatisplus.core.MybatisConfiguration configuration = properties.getConfiguration();
         if (configuration == null && !StringUtils.hasText(properties.getConfigLocation())) {
-          configuration = new org.apache.ibatis.session.Configuration();
+          configuration = new com.baomidou.mybatisplus.core.MybatisConfiguration();
         }
         List<ConfigurationCustomizer> configurationCustomizers = configurationCustomizersProvider.getIfAvailable();
         if (configuration != null && !CollectionUtils.isEmpty(configurationCustomizers)) {
@@ -167,7 +182,8 @@ public class DatasourceConfig {
         if (properties.getConfigurationProperties() != null) {
           factory.setConfigurationProperties(properties.getConfigurationProperties());
         }
-        Interceptor[] interceptors = filterInterceptors(interceptorsProvider.getIfAvailable(), pageInterceptor);
+        Interceptor[] interceptors = filterInterceptors(interceptorsProvider.getIfAvailable(), 
+                pageInterceptor, paginationInterceptor);
         if (!ObjectUtils.isEmpty(interceptors)) {
           factory.setPlugins(interceptors);
         }
@@ -184,6 +200,34 @@ public class DatasourceConfig {
         if (!ObjectUtils.isEmpty(properties.resolveMapperLocations())) {
           factory.setMapperLocations(properties.resolveMapperLocations());
         }
+        
+        // Mybatis Plus 相关配置
+        LanguageDriver[] languageDrivers = languageDriversProvider.getIfAvailable();
+        Class<? extends LanguageDriver> defaultLanguageDriver = properties.getDefaultScriptingLanguageDriver();
+        if (!ObjectUtils.isEmpty(languageDrivers)) {
+            factory.setScriptingLanguageDrivers(languageDrivers);
+        }
+        Optional.ofNullable(defaultLanguageDriver).ifPresent(factory::setDefaultScriptingLanguageDriver);
+        
+        if (StringUtils.hasLength(properties.getTypeEnumsPackage())) {
+            factory.setTypeEnumsPackage(properties.getTypeEnumsPackage());
+        }
+        
+        // 此处必为非 NULL
+        GlobalConfig globalConfig = properties.getGlobalConfig();
+        if (applicationContext.getBeanNamesForType(MetaObjectHandler.class, false, false).length > 0) {
+            MetaObjectHandler metaObjectHandler = applicationContext.getBean(MetaObjectHandler.class);
+            globalConfig.setMetaObjectHandler(metaObjectHandler);
+        }
+        if (applicationContext.getBeanNamesForType(IKeyGenerator.class, false, false).length > 0) {
+            IKeyGenerator keyGenerator = applicationContext.getBean(IKeyGenerator.class);
+            globalConfig.getDbConfig().setKeyGenerator(keyGenerator);
+        }
+        if (applicationContext.getBeanNamesForType(ISqlInjector.class, false, false).length > 0) {
+            ISqlInjector iSqlInjector = applicationContext.getBean(ISqlInjector.class);
+            globalConfig.setSqlInjector(iSqlInjector);
+        }
+        factory.setGlobalConfig(globalConfig);
         
         return factory.getObject();
 	}
@@ -202,9 +246,12 @@ public class DatasourceConfig {
 	 * +过滤PageInterceptor
 	 * @param interceptors 环境上下文中的Interceptor
 	 * @param pageInterceptor 分页的Interceptor
+	 * @param paginationInterceptor MybatisPlus的Interceptor
+	 * 
 	 * @return 过滤其他PageInterceptor之后的interceptors
 	 */
-	private Interceptor[] filterInterceptors(Interceptor[] interceptors, Interceptor pageInterceptor) throws Exception {
+	private Interceptor[] filterInterceptors(Interceptor[] interceptors, Interceptor pageInterceptor, 
+			Interceptor paginationInterceptor) throws Exception {
 		List<Interceptor> otherInterceptors = new ArrayList<>();
         if (!ObjectUtils.isEmpty(interceptors)) {
         	for (Interceptor interceptor : interceptors) {
@@ -214,7 +261,12 @@ public class DatasourceConfig {
         		otherInterceptors.add(interceptor);
         	}
         }
-        otherInterceptors.add(pageInterceptor);
+        if (pageInterceptor != null) {
+            otherInterceptors.add(pageInterceptor);
+        }
+        if (paginationInterceptor != null) {
+            otherInterceptors.add(paginationInterceptor);
+        }
         
         if (!otherInterceptors.isEmpty()) {
         	return otherInterceptors.toArray(new Interceptor[otherInterceptors.size()]);
@@ -224,14 +276,14 @@ public class DatasourceConfig {
 	}
 	
 	/**
-	 * +主Mybatis属性配置
-	 * @return MybatisProperties
+	 * +主Mybatis+MybatisPlus属性配置
+     * @return MybatisPlusProperties
 	 */
 	@Primary
-	@Bean(name = "mybatisProperties")
+	@Bean(name = "myBatisPlusProperties")
 	@ConfigurationProperties(prefix = "mybatis.master")
-	public MybatisProperties myBatisProperties() {
-		return new MybatisProperties();
+	public MybatisPlusProperties myBatisPlusProperties() {
+        return new MybatisPlusProperties();
 	}
 	
 	/**
@@ -272,13 +324,22 @@ public class DatasourceConfig {
         return interceptor;
 	}
 	
-    /**
-     * +自定义druid的filter
-     * @return filter
+	/**
+     * +Druid防火墙过滤器
+     * @return 自定义的WallFilter
      */
     @Bean(name = "wallFilter")
     @ConfigurationProperties(prefix = "druid.filters.wall")
     public WallFilter wallFilter() {
         return new WallFilter();
+    }
+    
+    /**
+     * +Mybatis Plus 拦截器
+     * @return 自定义的PaginationInterceptor
+     */
+    @Bean
+    public Interceptor paginationInterceptor() {
+        return new PaginationInterceptor();
     }
 }

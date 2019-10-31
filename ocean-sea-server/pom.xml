@@ -152,6 +152,10 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
         
         <dependency>
             <groupId>org.springframework</groupId>
@@ -226,21 +230,6 @@
     		<artifactId>gson</artifactId>
   		</dependency>
 		
-		<dependency>
-      		<groupId>org.springframework.data</groupId>
-      		<artifactId>spring-data-elasticsearch</artifactId>
-      		<exclusions>
-        		<exclusion>
-          			<artifactId>jcl-over-slf4j</artifactId>
-          			<groupId>org.slf4j</groupId>
-        		</exclusion>
-        		<exclusion>
-          			<artifactId>log4j-core</artifactId>
-          			<groupId>org.apache.logging.log4j</groupId>
-        		</exclusion>
-      		</exclusions>
-    	</dependency>
-    	
     	<!-- kafka -->
     	<dependency>
         	<groupId>org.springframework.kafka</groupId>

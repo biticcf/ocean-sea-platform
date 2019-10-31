@@ -5,6 +5,12 @@ package com.biticcf.ocean.sea.domain.dao.po;
 
 import java.util.Date;
 
+import org.apache.ibatis.type.JdbcType;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.github.biticcf.mountain.core.common.model.WdBaseModel;
 
 /**
@@ -13,19 +19,28 @@ import com.github.biticcf.mountain.core.common.model.WdBaseModel;
  * @time    下午6:23:10
  * 商品基本信息数据模型,对应于WD_DEMO_INFO表(不存在的表,实际应用时替换为实际表)
  */
+@TableName(value = "WD_DEMO_INFO")
 public class DemoPo extends WdBaseModel {
 	private static final long serialVersionUID = -3690814072354261953L;
 	
+	@TableId(value = "ID", type = IdType.AUTO)
+    @TableField(value = "ID", jdbcType = JdbcType.BIGINT)
 	private Long		 id; //自增主键
+	@TableField(value = "GOODS_CODE", jdbcType = JdbcType.VARCHAR)
 	private String       goodsCode; //商品代码
+	@TableField(value = "GOODS_SN", jdbcType = JdbcType.VARCHAR)
 	private String       goodsSn; //商品编码(64位长度编码)(对应原ID)(唯一非空)
 	
 	/**
 	 * 注意：以下4个字段,在每张表中都要有
 	 */
+	@TableField(value = "STATUS", jdbcType = JdbcType.TINYINT)
 	private Byte         status;  //记录状态,0有效,1无效
+	@TableField(value = "CREATE_TIME", jdbcType = JdbcType.TIMESTAMP_WITH_TIMEZONE)
 	private Date         createTime;  //创建时间
+	@TableField(value = "UPDATE_TIME", jdbcType = JdbcType.TIMESTAMP_WITH_TIMEZONE)
 	private Date         updateTime; //更新时间
+	@TableField(value = "VERSION", jdbcType = JdbcType.INTEGER)
 	private Integer      version; //乐观锁版本号
 	
 	/**
