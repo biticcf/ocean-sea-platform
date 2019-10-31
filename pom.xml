@@ -40,7 +40,7 @@
 		<!-- 根据XML接口定义自动生成代码 -->
 		<skipGenerator>true</skipGenerator>
 		<!-- mountain核心组件版本 -->
-		<mountain.version>4.0.RELEASE</mountain.version>
+		<mountain.version>5.0.RELEASE</mountain.version>
 		
 		<!-- spring platform -->
 		<spring.boot.version>2.2.0.RELEASE</spring.boot.version>
