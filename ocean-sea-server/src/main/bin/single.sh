@@ -72,7 +72,7 @@ start(){
 				exit 1
 		else
 	    	cd $APP_PATH
-				nohup java $JAVA_OPTS -cp $CLASS_PATH -jar $DEFAULT_JAR $APP_NAME 2 > $LOG_PATH/console.log & 
+				nohup java $JAVA_OPTS -cp $CLASS_PATH -jar $DEFAULT_JAR $APP_NAME > /dev/null & 
 				echo "$APP_NAME is started."
 		fi
 }

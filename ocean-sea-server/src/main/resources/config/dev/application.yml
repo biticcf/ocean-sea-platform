@@ -225,6 +225,7 @@ mybatis:
       lazy-load-trigger-methods: equals,clone,hashCode,toString
       log-prefix: mybatis.sql.
       log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+      #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #可以在控制台输出sql
     pagehelper: 
       helper-dialect: mysql
       offset-as-page-num: false
