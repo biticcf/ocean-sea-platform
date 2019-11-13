@@ -205,6 +205,8 @@ management:
       enabled: false
     health: 
       show-details: always    # never, always, when-authorized
+  trace: 
+    http.enabled: false
 
 # hystrix相关
 feign:
