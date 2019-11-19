@@ -9,6 +9,7 @@ import javax.validation.ConstraintViolationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.biticcf.ocean.sea.model.enums.ResultEnum;
@@ -188,6 +191,38 @@ public class GlobalExceptionHandler {
 	}
 	
 	/**
+	 * HttpClientErrorException异常处理
+	 * @param ex HttpClientErrorException
+	 * @return 返回结果
+	 */
+	@ExceptionHandler(value = HttpClientErrorException.class)
+	public ReturnResult<Object> httpClientErrorExceptionHandler(HttpClientErrorException ex) {
+		HttpStatus statusCode = ex.getStatusCode();
+		if (statusCode == null) {
+			statusCode = HttpStatus.BAD_REQUEST;
+		}
+		String errorMsg = "HttpClientErrorException Error!";
+		
+		return exceptionHandler(statusCode.value(), statusCode.getReasonPhrase() + "[" + ex.getMessage() + "]", ex, errorMsg);
+	}
+	
+	/**
+	 * HttpServerErrorException异常处理
+	 * @param ex HttpServerErrorException
+	 * @return 返回结果
+	 */
+	@ExceptionHandler(value = HttpServerErrorException.class)
+	public ReturnResult<Object> httpServerErrorExceptionHandler(HttpServerErrorException ex) {
+		HttpStatus statusCode = ex.getStatusCode();
+		if (statusCode == null) {
+			statusCode = HttpStatus.SERVICE_UNAVAILABLE;
+		}
+		String errorMsg = "HttpServerErrorException Error!";
+		
+		return exceptionHandler(statusCode.value(), statusCode.getReasonPhrase() + "[" + ex.getMessage() + "]", ex, errorMsg);
+	}
+	
+	/**
 	 * WdRuntimeException异常处理
 	 * @param ex WdRuntimeException
 	 * @return 返回结果
@@ -252,6 +287,16 @@ public class GlobalExceptionHandler {
 		writeErrorLog(errorMsg, th);
 		
 		return new ReturnResult<Object>(resultEnu.getCode(), resultEnu.getDesc(), entry);
+	}
+	/**
+	 * +统一异常处理
+	 * @param resultEnu
+	 * @return
+	 */
+	private ReturnResult<Object> exceptionHandler(int errorCode, String errorMsg, Throwable th, Object entry) {
+		writeErrorLog(errorMsg, th);
+		
+		return new ReturnResult<Object>(errorCode, errorMsg, entry);
 	}
 	
 	/**
