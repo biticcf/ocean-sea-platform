@@ -9,7 +9,7 @@ spring:
     default-label: ${spring.custom.default-env}
     default-profile: ${PROFILES_ACTIVITE:default}
   autoconfigure: 
-    exclude: com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration
+    exclude: com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration,org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration
   banner: 
     charset: UTF-8
     location: classpath:banner.txt
@@ -132,6 +132,10 @@ server:
       request-attributes-enabled: false
       rotate: true
       suffix: .log
+      filted-request-entries: 
+       - uri: /
+         method: HEAD
+         type: 0
 
 eureka:
   instance:
