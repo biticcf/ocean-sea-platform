@@ -209,7 +209,7 @@ mybatis:
       field-strategy: 0
       banner: false
     configuration: 
-      cache-enabled: true
+      cache-enabled: false #不启用二级缓存,原因是连表查询会有问题
       lazy-loading-enabled: true
       aggressive-lazy-loading: false
       multiple-result-sets-enabled: true
@@ -220,7 +220,7 @@ mybatis:
       default-statement-timeout: 180
       map-underscore-to-camel-case: true
       default-fetch-size: 200
-      local-cache-scope: SESSION
+      local-cache-scope: STATEMENT #不使用SESSION,原因是多个服务器时会出现问题
       jdbc-type-for-null: OTHER
       lazy-load-trigger-methods: equals,clone,hashCode,toString
       log-prefix: mybatis.sql.

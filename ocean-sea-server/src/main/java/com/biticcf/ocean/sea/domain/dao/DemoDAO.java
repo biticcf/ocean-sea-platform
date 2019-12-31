@@ -6,16 +6,13 @@ package com.biticcf.ocean.sea.domain.dao;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.cache.decorators.LruCache;
 import org.apache.ibatis.type.JdbcType;
 
 import com.biticcf.ocean.sea.domain.dao.po.DemoPo;
@@ -28,7 +25,6 @@ import com.github.biticcf.mountain.core.common.service.MountainBaseMapper;
  * @time    上午10:20:48
  *
  */
-@CacheNamespace(eviction = LruCache.class, flushInterval = 60000L, size = 1024, readWrite = true)
 @Mapper
 public interface DemoDAO extends MountainBaseMapper<DemoPo> {
 	/**
@@ -36,7 +32,6 @@ public interface DemoDAO extends MountainBaseMapper<DemoPo> {
 	 * @param id ID值
 	 * @return 查询结果
 	 */
-	@Options(useCache = true, flushCache = Options.FlushCachePolicy.FALSE, timeout = 60000)
 	@Results(id = "demoMap", value = {
 			@Result(property = "id", column = "id", id = true, javaType = Long.class, jdbcType = JdbcType.BIGINT),
 			@Result(property = "goodsCode", column = "GOODS_CODE", javaType = String.class, jdbcType = JdbcType.VARCHAR),
@@ -52,7 +47,6 @@ public interface DemoDAO extends MountainBaseMapper<DemoPo> {
 	 * +查询列表
 	 * @return 查询结果
 	 */
-	@Options(useCache = true, flushCache = Options.FlushCachePolicy.FALSE, timeout = 60000)
 	@Select("SELECT * FROM `WD_DEMO_INFO` ORDER BY `ID` DESC")
 	@ResultMap(value = {"demoMap"})
 	List<DemoPo> queryList();
@@ -61,7 +55,6 @@ public interface DemoDAO extends MountainBaseMapper<DemoPo> {
 	 * @param demoPo 数据记录
 	 * @return 保存成功条数
 	 */
-	@Options(useCache = true, flushCache = Options.FlushCachePolicy.TRUE, useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
 	@InsertProvider(type = DemoSqlProvider.class, method = "insert")
 	int insert(DemoPo demoPo);
 	/**
@@ -69,7 +62,6 @@ public interface DemoDAO extends MountainBaseMapper<DemoPo> {
 	 * @param demoList 对象集
 	 * @return 保存成功条数
 	 */
-	@Options(useCache = true, flushCache = Options.FlushCachePolicy.TRUE, useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
 	@InsertProvider(type = DemoSqlProvider.class, method = "inserts")
 	int batchInsert(List<DemoPo> demoList);
 }
