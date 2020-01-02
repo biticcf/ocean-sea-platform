@@ -1,6 +1,8 @@
 spring: 
   application: 
     name: ${TENANT_GROUP:}ocean-sea
+  main: 
+    banner-mode: CONSOLE #解决输出两次banner，在bootstrap.yml不配置banner-mode或者banner-mode=OFF
   #cloud: 
   #  config: 
   #    label: sit
