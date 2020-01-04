@@ -3,9 +3,9 @@
  */
 package com.biticcf.ocean.sea.web;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -24,7 +24,7 @@ import com.biticcf.ocean.sea.domain.support.ConstantContext;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, 
                 classes = {MainConfig.class})
 public class AbstTestController {
-	protected static Logger logger = LoggerFactory.getLogger(AbstTestController.class);
+	protected static Log logger = LogFactory.getLog(AbstTestController.class);
 	
 	@Autowired
 	protected TestRestTemplate restTemplate;

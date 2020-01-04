@@ -3,8 +3,8 @@
  */
 package com.biticcf.ocean.sea.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.github.biticcf.mountain.core.common.util.LogModel;
 
@@ -15,7 +15,7 @@ import com.github.biticcf.mountain.core.common.util.LogModel;
  *
  */
 public class AbstractService {
-	protected static Logger logger = LoggerFactory.getLogger("SERVICE.LOG");
+	protected static Log logger = LogFactory.getLog("SERVICE.LOG");
 	
 	/**
 	 * info日志
@@ -64,7 +64,7 @@ public class AbstractService {
 	 * @param logger 日志工具
 	 * @param lm 日志收集器
 	 */
-	protected void writeLog(Logger logger, LogModel lm) {
+	protected void writeLog(Log logger, LogModel lm) {
 		if (logger.isInfoEnabled()) {
 			logger.info(lm.toJson());
 		}
@@ -76,7 +76,7 @@ public class AbstractService {
 	 * @param lm 日志收集器
 	 * @param isClear 是否清除缓存日志,true清除,false不清除
 	 */
-	protected void writeLog(Logger logger, LogModel lm, boolean isClear) {
+	protected void writeLog(Log logger, LogModel lm, boolean isClear) {
 		if (logger.isInfoEnabled()) {
 			logger.info(lm.toJson(isClear));
 		}
@@ -87,7 +87,7 @@ public class AbstractService {
 	 * @param logger 日志工具
 	 * @param message 日志信息
 	 */
-	protected void writeLog(Logger logger, String message) {
+	protected void writeLog(Log logger, String message) {
 		if (logger.isWarnEnabled()) {
 			logger.warn(message);
 		}
@@ -99,7 +99,7 @@ public class AbstractService {
 	 * @param lm 日志收集器
 	 * @param e 异常信息
 	 */
-	protected void writeErrorLog(Logger logger, LogModel lm, Throwable e) {
+	protected void writeErrorLog(Log logger, LogModel lm, Throwable e) {
 		if (logger.isErrorEnabled()) {
 			logger.error(lm.toJson(false), e);
 		}

@@ -3,8 +3,8 @@
  */
 package com.biticcf.ocean.sea.domain;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.biticcf.ocean.sea.domain.support.ConstantContext;
 import com.github.biticcf.mountain.core.common.service.WdServiceCallback;
@@ -17,7 +17,7 @@ import com.github.biticcf.mountain.core.common.service.WdServiceCallback;
  * @param <T> 数据类型
  */
 public abstract class AbstractBaseDomain<T> implements WdServiceCallback<T> {
-	protected static Logger logger = LoggerFactory.getLogger("COMMON.LOG");
+	protected static Log logger = LogFactory.getLog("COMMON.LOG");
 	
 	private ConstantContext constantContext;
 	

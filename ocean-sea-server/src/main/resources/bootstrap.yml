@@ -193,7 +193,7 @@ ribbon:
 #     NFLoadBalancerPingClassName: com.netflix.loadbalancer.PingUrl
 
 logging: 
-  config: classpath:logback-spring.xml
+  config: classpath:logback.xml
   file.path: ${LOGGING_PATH}
   register-shutdown-hook: false
 

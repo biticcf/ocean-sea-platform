@@ -10,6 +10,8 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.scripting.LanguageDriver;
@@ -17,8 +19,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -71,7 +71,7 @@ import com.github.pagehelper.autoconfigure.PageHelperProperties;
 @AutoConfigureOrder(-100)
 @AutoConfigureAfter({MybatisAutoConfiguration.class})
 public class DatasourceConfig {
-	protected static Logger logger = LoggerFactory.getLogger("DAO.LOG");
+	protected static Log logger = LogFactory.getLog("DAO.LOG");
 	
 	@Value("${spring.datasource.type}")
 	private Class<? extends DataSource> datasourceType;

@@ -7,8 +7,8 @@ import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.time.Duration;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -38,7 +38,7 @@ import redis.clients.jedis.JedisPoolConfig;
 @Configuration(proxyBeanMethods = false)
 @EnableCaching //启用缓存，这个注解很重要
 public class RedisCacheConfig extends CachingConfigurerSupport {
-	protected static Logger logger = LoggerFactory.getLogger("CACHE.LOG");
+	protected static Log logger = LogFactory.getLog("CACHE.LOG");
 	
 	/**
 	 * 缓存管理器

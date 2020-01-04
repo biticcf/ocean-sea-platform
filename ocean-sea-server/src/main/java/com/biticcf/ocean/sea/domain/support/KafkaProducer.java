@@ -3,8 +3,8 @@
  */
 package com.biticcf.ocean.sea.domain.support;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -25,7 +25,7 @@ import com.biticcf.ocean.sea.domain.config.KafkaConfig;
 @ConditionalOnBean({KafkaConfig.class})
 @ConditionalOnExpression("${spring.kafka.producer.enabled:false}")
 public class KafkaProducer {
-	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+	protected final Log logger = LogFactory.getLog(this.getClass());
 	
 	@Autowired
     private KafkaTemplate<String, String> kafkaTemplate;

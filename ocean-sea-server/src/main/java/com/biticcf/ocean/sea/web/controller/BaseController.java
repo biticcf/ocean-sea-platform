@@ -3,8 +3,8 @@
  */
 package com.biticcf.ocean.sea.web.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import com.github.biticcf.mountain.core.common.lang.Logable;
@@ -18,7 +18,7 @@ import com.github.biticcf.mountain.core.common.lang.Logable;
  */
 @ControllerAdvice
 public abstract class BaseController implements Logable {
-	protected static Logger logger = LoggerFactory.getLogger("WEB.LOG");
+	protected static Log logger = LogFactory.getLog("WEB.LOG");
 	
 	public BaseController() {
 		

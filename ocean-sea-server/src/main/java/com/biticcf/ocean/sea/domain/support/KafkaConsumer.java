@@ -3,9 +3,9 @@
  */
 package com.biticcf.ocean.sea.domain.support;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -23,7 +23,7 @@ import com.biticcf.ocean.sea.domain.config.KafkaConfig;
 @ConditionalOnBean({KafkaConfig.class})
 @ConditionalOnExpression("${spring.kafka.consumer.enabled:false}")
 public class KafkaConsumer {
-	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+	protected final Log logger = LogFactory.getLog(this.getClass());
 	
 	/**
 	 * 接收kafka消息并且处理

@@ -7,8 +7,8 @@ import java.io.IOException;
 
 import javax.validation.ConstraintViolationException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -34,7 +34,7 @@ import com.github.biticcf.mountain.core.common.result.ReturnResult;
 @ControllerAdvice
 @ResponseBody
 public class GlobalExceptionHandler {
-	private static Logger logger = LoggerFactory.getLogger("WEB.LOG");
+	private static Log logger = LogFactory.getLog("WEB.LOG");
 	
 	/**
 	 * NullPointerException异常处理
