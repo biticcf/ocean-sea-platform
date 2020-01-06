@@ -4,8 +4,11 @@
 -->
 <configuration scan="false" scanPeriod="3600 seconds" debug="false">
 	<!-- logger上下文,LOG_PATH是spring boot内置变量,取值logging.path -->
-	<springProperty scope="context" name="APPLICATION_NAME" source="spring.application.name"/>
+	<!-- 
+	注意：使用logback-spring.xml文件名的话可以开启这个属性
 	<springProperty scope="context" name="LOGGING_ROOT" source="logging.file.path"/>
+	-->
+	<property name="LOGGING_ROOT" value="${LOGGING_PATH}" />
 	<property name="PATTERN" value="%d [%t-${PID}][TraceId:%X{traceId}] %-5p %c - [%m]%n" />
 	
 	<!-- <contextName>${APPLICATION_NAME}Log</contextName> -->
