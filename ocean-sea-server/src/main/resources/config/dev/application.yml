@@ -106,8 +106,7 @@ server:
     max-swallow-size: 10MB
 
 eureka:
-  client:
-    enabled: false
+  client: 
     serviceUrl:
       defaultZone: ${REGISTER_CENTER_DEFAULT_SERVICE_URL:http://127.0.0.1:12344/eureka/}
 

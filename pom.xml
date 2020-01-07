@@ -151,6 +151,13 @@
                 </exclusions>
             </dependency>
             
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-bom</artifactId>
+                <version>10.7.0</version>
+                <type>pom</type>
+            </dependency>
+            
             <!-- 解决Feign的 application/x-www-form-urlencoded和multipart/form-data类型 -->
             <dependency>
 				<groupId>io.github.openfeign.form</groupId>

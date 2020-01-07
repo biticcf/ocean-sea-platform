@@ -9,11 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.autoconfigure.http.HttpProperties;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -50,16 +48,6 @@ import com.github.biticcf.mountain.core.common.service.StringDecoderForHeaderCon
                 @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Controller.class)
         })
 public class WebMvcConfiguration implements WebMvcConfigurer {
-	
-	/**
-	 * 定义HttpClient
-	 * @return HttpClient
-	 */
-    @Bean
-    @ConfigurationProperties(prefix = "feign.httpclient")
-    public HttpClientBuilder apacheHttpClientBuilder() {
-		return HttpClientBuilder.create();
-	}
     
     /**
      * 自定义输入的日期格式

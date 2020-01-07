@@ -9,7 +9,9 @@ spring:
     default-label: ${spring.custom.default-env}
     default-profile: ${PROFILES_ACTIVITE:default}
   autoconfigure: 
-    exclude: com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration,org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration
+    exclude: 
+     - com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration
+     - org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration
   banner: 
     charset: UTF-8
     location: classpath:banner.txt
@@ -23,7 +25,7 @@ spring:
     web-application-type: servlet
     allow-bean-definition-overriding: false
     banner-mode: OFF #解决输出两次banner，这里不配置banner-mode或者banner-mode=OFF
-    lazy-initialization: true
+    lazy-initialization: false
   mandatory-file-encoding: UTF-8
   output.ansi.enabled: detect
   cloud: 
@@ -35,6 +37,10 @@ spring:
     # RestTemplate和LoadBalancerClient的负载均衡重试策略
     loadbalancer: 
       retry: false
+      ribbon.enabled: true
+    httpclientfactories: 
+      apache.enabled: true
+      ok.enabled: false
     # 统一配置中心(本地与git)
     config: 
       # client端配置
@@ -159,6 +165,7 @@ eureka:
     status-page-url-path: /info
     health-check-url-path: /health
   client:
+    enabled: false
     #eureka client刷新本地缓存时间
     #默认30s
     registryFetchIntervalSeconds: 5
@@ -223,22 +230,21 @@ feign:
   httpclient:
     #Apache的HTTP Client替换Feign原始的http client
     enabled: true
-    maxConnections: 20480
-    maxConnectionsPerRoute: 512
-    timeToLive: 60
-    connectionTimeout: 10000
-    userAgent: 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0'
-    #defaultRequestConfig:
-    #  connectionRequestTimeout: 60000
-    #  connectTimeout: 60000
-    #  socketTimeout: 60000
+    max-connections: 20480
+    max-connections-per-route: 512
+    time-to-live: 60
+    time-to-live-unit: SECONDS
+    connection-timeout: 60000
+    user-agent: 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0'
   client:
     # 配置文件优先级高
-    defaultToProperties: true
+    default-to-properties: false
     config:
       default:
-        loggerLevel: full
-        # retryer: feign.Retryer.NEVER_RETRY
+        logger-level: BASIC
+        connect-timeout: 60000
+        read-timeout: 60000
+        decode404: true
   hystrix: 
     enabled: true
   compression: 
@@ -248,7 +254,8 @@ feign:
       mime-types: application/json,application/xml,text/xml
       min-request-size: 2048
     response: 
-      enabled: false
+      enabled: true
+      useGzipDecoder: true
 
 hystrix:
   command:

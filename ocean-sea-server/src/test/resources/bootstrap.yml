@@ -4,23 +4,43 @@ spring:
     # cglib proxy not jdk proxy
     #proxy-target-class: false
   custom: # 自定义属性
-    default-env: ${SERVER_ENVIROMENT:sit}
+    default-env: dev #注意：该属性不能有默认值，请从pom.xml更改其值
     default-name: application
-    default-label: master
-    default-profile: ${PROFILES_ACTIVITE:default}
+    default-label: ${spring.custom.default-env}
+    default-profile: default
+  autoconfigure: 
+    exclude: 
+     - com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration
+     - org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration
+  banner: 
+    charset: UTF-8
+    location: classpath:banner.txt
   #config: # 简化版本地数据源配置
-  #  name: ${spring.custom.default-name}  
-  #  additional-location: classpath:/config/${spring.custom.default-env}/
+  #  name: ${spring.custom.default-name}
+  #  location: classpath:/config/${spring.custom.default-label}/ #启用云配置的话不能使用该配置,仅用于本地配置有效
+  #  additional-location: classpath:/config/${spring.custom.default-label}/ #云配置有效
   profiles: 
     active: composite #启用的配置文件
   main:
     web-application-type: servlet
+    allow-bean-definition-overriding: false
+    banner-mode: OFF #解决输出两次banner，这里不配置banner-mode或者banner-mode=OFF
+    lazy-initialization: false
+  mandatory-file-encoding: UTF-8
+  output.ansi.enabled: detect
   cloud: 
+    bootstrap: 
+      enabled: true
+      name: bootstrap
     refresh: 
       enabled: true
     # RestTemplate和LoadBalancerClient的负载均衡重试策略
     loadbalancer: 
       retry: false
+      ribbon.enabled: true
+    httpclientfactories: 
+      apache.enabled: true
+      ok.enabled: false
     # 统一配置中心(本地与git)
     config: 
       # client端配置
@@ -48,54 +68,140 @@ spring:
           - 
             type: native   # 本地数据源配置
             order: 1
-            add-label-locations: true
+            add-label-locations: false
             fail-on-error: false #how to handle exceptions during decryption
             search-locations: 
-              - classpath:/config/${spring.custom.default-env}
+              - classpath:/config/${spring.custom.default-label}/
+#          - 
+#            type: git # git数据源配置
+#            order: 2
+#            uri: http://127.0.0.1:2131/config/config-server.git
+#            search-paths: ocean-sea/${spring.custom.default-label}
+#            skip-ssl-validation: true
+#            force-pull: true
+#            clone-on-start: true
+#            delete-untracked-branches: true
+#            basedir: /var/wd/ocean-sea-config-repo #远程文件本地保存位置
+#            timeout: 5s #单位秒
+#            #username: user
+#            #password: secret
+#            #proxy:
+#            #  https: #http或https
+#            #    host: my-proxy.host.io
+#            #    port: '3128'
+#            #    username: myproxyusername
+#            #    password: myproxypassword
+#            #    non-proxy-hosts: example.com
   mvc: 
-    dispatch-trace-request: false
+    dispatch-trace-request: true
     dispatch-options-request: true
     favicon: 
       enabled: false
-    formcontent: 
-      putfilter: 
-        enabled: true
+    formcontent.filter.enabled: true
+    hiddenmethod.filter.enabled: true
     ignore-default-model-on-redirect: true
     log-resolved-exception: false
     throw-exception-if-no-handler-found: true
     servlet: 
       load-on-startup: 4
+      path: /
   resources: 
-    add-mappings: false
+    add-mappings: true
+    static-locations: 'classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/'
 
 server: 
   compression: 
     enabled: true
-    mime-types: text/html,text/css,application/json
+    mime-types: 'text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json,application/xml'
+    min-response-size: 1KB
+  http2: 
+    enabled: true
+  max-http-header-size: 1MB
   tomcat: 
-    basedir: ./tmp
-    background-processor-delay: 30
+    basedir: /var/wd/tmp
+    background-processor-delay: 30s
     additional-tld-skip-patterns: 
     port-header: X-Forwarded-Port
+    mbeanregistry.enabled: false
     protocol-header: X-Forwarded-Proto
     protocol-header-https-value: https
     redirect-context-root: true
     remote-ip-header: X-Forwarded-For
     uri-encoding: UTF-8
+    resource: 
+      allow-caching: false
     accesslog: 
       enabled: true
       buffered: true
       directory: ./log
       file-date-format: .yyyy-MM-dd
-      pattern: '%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i" %D'
+      pattern: '%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i" %D ms'
       prefix: access_log
       rename-on-rotate: false
       request-attributes-enabled: false
       rotate: true
       suffix: .log
+      filted-enable: true
+      filted-request-entries: 
+       - uri: /
+         method: HEAD
+         type: 0
+
+eureka:
+  instance:
+    #服务刷新时间配置，每隔这个时间会主动心跳一次
+    #默认30s
+    lease-renewal-interval-in-seconds: 5
+    #服务过期时间配置,超过这个时间没有接收到心跳EurekaServer就会将这个实例剔除
+    #注意，EurekaServer一定要设置eureka.server.eviction-interval-timer-in-ms否则这个配置无效，这个配置一般为服务刷新时间配置的三倍
+    #默认90s
+    lease-expiration-duration-in-seconds: 15
+    prefer-ip-address: true
+    hostname: ${SERVER_HOSTNAME:${spring.cloud.client.hostname}}
+    ip-address: ${SERVER_ACCESSABLE_IP:${spring.cloud.client.ip-address}}
+    non-secure-port-enabled: true
+    non-secure-port: ${SERVER_ACCESSABLE_PORT:10000}
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.name}:${SERVER_ACCESSABLE_IP:${spring.cloud.client.ip-address}}:${server.port}
+    status-page-url-path: /info
+    health-check-url-path: /health
+  client:
+    enabled: false
+    #eureka client刷新本地缓存时间
+    #默认30s
+    registryFetchIntervalSeconds: 5
+    fetch-registry: true
+    instance-info-replication-interval-seconds: 10
+    initial-instance-info-replication-interval-seconds: 30
+    eureka-service-url-poll-interval-seconds: 60
+    eureka-server-read-timeout-seconds: 8
+    eureka-server-connect-timeout-seconds: 5
+    eureka-server-total-connections: 1000
+    eureka-server-total-connections-per-host: 100
+    eureka-connection-idle-timeout-seconds: 30
+
+# ribbon负载全局配置
+ribbon:
+  ConnectionTomeout: 1000
+  #eureka客户端ribbon刷新时间
+  #默认30s
+  ServerListRefreshInterval: 5000
+  eureka:
+    enable: false
+  ReadTimeout: 5000
+  # 对所有操作请求都进行重试(禁止)
+  OkToRetryOnAllOperations: false
+  # 切换实例的重试次数
+  MaxAutoRetriesNextServer: 0
+  # 对当前实例的重试次数
+  MaxAutoRetries: 0
+# ribbon负载定向配置
+# <sericeId>: 
+#   ribbon:
+#     NFLoadBalancerPingClassName: com.netflix.loadbalancer.PingUrl
 
 logging: 
-  path: ${LOGGING.PATH:/var/wd/ocean-sea_logs/}
+  config: classpath:logback.xml
+  file.path: /var/wd/ocean-sea_logs
   register-shutdown-hook: false
 
 # ACTUATOR PROPERTIES
@@ -103,19 +209,70 @@ management:
   server: 
     servlet: 
       context-path: /
+  endpoints: 
+    web: 
+      base-path: /ocean/sea
+      exposure: 
+        include: '*'
+        #exclude: env
+  endpoint: 
+    shutdown: 
+      enabled: false
+    health: 
+      show-details: always    # never, always, when-authorized
+  trace: 
+    http.enabled: false
 
 # hystrix相关
 feign:
+  okhttp: 
+    enabled: false
   httpclient:
     #Apache的HTTP Client替换Feign原始的http client
     enabled: true
+    max-connections: 20480
+    max-connections-per-route: 512
+    time-to-live: 60
+    time-to-live-unit: SECONDS
+    connection-timeout: 60000
+    user-agent: 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0'
+  client:
+    # 配置文件优先级高
+    default-to-properties: false
+    config:
+      default:
+        logger-level: BASIC
+        connect-timeout: 60000
+        read-timeout: 60000
+        decode404: true
   hystrix: 
     enabled: true
   compression: 
     request: 
       #请求和响应GZIP压缩支持
       enabled: true
-      mime-types: application/json
+      mime-types: application/json,application/xml,text/xml
       min-request-size: 2048
     response: 
-      enabled: false
+      enabled: true
+      useGzipDecoder: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 15000
+        # 熔断关闭
+        timeout:
+          enabled: false
+  threadpool:
+    default:
+      coreSize: 40
+      maximumSize: 100
+      maxQueueSize: 100
+
+hibernate: 
+  validator: 
+    fail_fast: true
