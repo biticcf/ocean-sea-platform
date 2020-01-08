@@ -238,7 +238,7 @@ feign:
     user-agent: 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0'
   client:
     # 配置文件优先级高
-    default-to-properties: false
+    default-to-properties: true
     config:
       default:
         logger-level: BASIC
