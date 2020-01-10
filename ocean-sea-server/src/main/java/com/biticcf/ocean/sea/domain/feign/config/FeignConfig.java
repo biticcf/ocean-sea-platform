@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.client.HttpClient;
 import org.springframework.beans.factory.ObjectFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -25,6 +26,8 @@ import com.biticcf.ocean.sea.domain.feign.fallback.CategoryFeignClientFallback;
 
 import feign.Client;
 import feign.Logger;
+import feign.RequestInterceptor;
+import feign.RequestTemplate;
 import feign.Retryer;
 import feign.codec.Decoder;
 import feign.codec.Encoder;
@@ -95,6 +98,23 @@ public class FeignConfig {
     public Decoder responseGzipDecoder(ObjectFactory<HttpMessageConverters> messageConverters) {
         return new OptionalDecoder(new ResponseEntityDecoder(
                 new DefaultGzipDecoder(new SpringDecoder(messageConverters))));
+    }
+    
+    /**
+     * +定制请求中的User-Agent
+     * @param userAgent
+     * @return RequestInterceptor
+     */
+    @Bean
+    public RequestInterceptor uaRequestInterceptor(@Value("${feign.httpclient.user-agent:Feign Client.}") String userAgent) {
+    	RequestInterceptor interceptor = new RequestInterceptor() {
+			@Override
+			public void apply(RequestTemplate template) {
+				template.header("User-Agent", userAgent);
+			}
+    	};
+    	
+    	return interceptor;
     }
 	
     /**
