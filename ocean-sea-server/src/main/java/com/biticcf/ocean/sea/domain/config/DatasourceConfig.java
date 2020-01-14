@@ -290,12 +290,6 @@ public class DatasourceConfig {
 	 * pageHelper属性配置
 	 * @return Properties
 	 */
-	@Bean(name = "pageProperties")
-	@ConfigurationProperties(prefix = "mybatis.master.pagehelper")
-	public Properties pageProperties() {
-		return new Properties();
-	}
-	
 	@Bean(name = "pageHelperProperties")
 	@ConfigurationProperties(prefix = "mybatis.master.pagehelper")
 	public PageHelperProperties pageHelperProperties() {
@@ -304,18 +298,13 @@ public class DatasourceConfig {
 	
 	/**
 	 * page插件配置
-	 * @param pageProperties pageHelper属性
 	 * @param extProperties pageHelper附加属性(closeConn问题)
 	 * @return Interceptor
 	 */
 	@Bean(name = "pageInterceptor")
-	public Interceptor pageInterceptor(@Qualifier("pageProperties") Properties pageProperties, 
-			@Qualifier("pageHelperProperties") PageHelperProperties extProperties) {
+	public Interceptor pageInterceptor(@Qualifier("pageHelperProperties") PageHelperProperties extProperties) {
 		PageInterceptor interceptor = new PageInterceptor();
         Properties properties = new Properties();
-        //先把一般方式配置的属性放进去
-        properties.putAll(pageProperties);
-        //在把特殊配置放进去，由于close-conn 利用上面方式时，属性名就是 close-conn 而不是 closeConn，所以需要额外的一步
         if (extProperties != null) {
         	properties.putAll(extProperties.getProperties());
         }

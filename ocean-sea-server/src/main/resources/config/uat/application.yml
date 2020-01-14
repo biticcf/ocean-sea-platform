@@ -227,13 +227,18 @@ mybatis:
       log-prefix: mybatis.sql.
       log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
     pagehelper: 
-      helper-dialect: mysql
-      offset-as-page-num: false
-      row-bounds-with-count: true
-      page-size-zero: false
-      reasonable: false
-      support-methods-arguments: false
-      return-page-info: none
+      dialect: com.github.pagehelper.PageHelper # 默认值
+      helper-dialect: mysql # 分页插件会自动检测当前的数据库链接，自动选择合适的分页方式（可以不设置）
+      page-size-zero: false # 默认值为 false，当该参数设置为 true 时，如果 pageSize=0 或者 RowBounds.limit = 0 就会查询出全部的结果
+      reasonable: false # 合法性，即纠错机制，配置reasonable为 true，这时如果 pageNum <= 0 会查询第一页，如果 pageNum > pages 会查询最后一页
+      properties: 
+        msCountCache: com.github.pagehelper.cache.GuavaCache # 默认值
+        ms: 
+          # GuavaCache属性配置
+          maximumSize: 10240
+          # expireAfterAccess: 60000 # MILLISECONDS
+          # expireAfterWrite: 60000 # MILLISECONDS
+          initialCapacity: 300
 
 # Perform Framework
 performframework: 
