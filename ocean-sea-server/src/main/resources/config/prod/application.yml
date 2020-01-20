@@ -37,6 +37,8 @@ spring:
   datasource: 
     # 使用druid数据库连接池
     type: com.github.biticcf.mountain.core.common.service.MountainDruidDataSource
+  devtools: 
+    add-properties: false # Devtools Property Defaults
   data: 
     elasticsearch: 
       cluster-nodes: 127.0.0.1:9200
