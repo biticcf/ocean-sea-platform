@@ -43,7 +43,7 @@
 		<mountain.version>7.2.RELEASE</mountain.version>
 		
 		<!-- spring platform -->
-		<spring.boot.version>2.2.2.RELEASE</spring.boot.version>
+		<spring.boot.version>2.2.3.RELEASE</spring.boot.version>
 		<spring.cloud.version>Hoxton.RELEASE</spring.cloud.version>
 		
 		<!-- mybatis -->
