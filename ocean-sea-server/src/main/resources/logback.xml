@@ -8,6 +8,10 @@
 	注意：使用logback-spring.xml文件名的话可以开启这个属性
 	<springProperty scope="context" name="LOGGING_ROOT" source="logging.file.path"/>
 	-->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+    
 	<property name="LOGGING_ROOT" value="${LOGGING_PATH}" />
 	<property name="PATTERN" value="%d [%t-${PID}][TraceId:%X{traceId}] %-5p %c - [%m]%n" />
 	
