@@ -44,7 +44,8 @@
 		
 		<!-- spring platform -->
 		<spring.boot.version>2.2.5.RELEASE</spring.boot.version>
-		<spring.cloud.version>Hoxton.SR2</spring.cloud.version>
+		<spring.cloud.version>Hoxton.SR3</spring.cloud.version>
+		<spring.data.version>Moore-SR5</spring.data.version>
 		
 		<!-- mybatis -->
 		<mybatis.spring.boot.starter.version>2.1.1</mybatis.spring.boot.starter.version>
@@ -109,6 +110,14 @@
                 <version>${spring.cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- spring data -->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-releasetrain</artifactId>
+                <version>${spring.data.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
             </dependency>
             
 			<!-- fastjson -->
