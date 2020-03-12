@@ -396,7 +396,7 @@
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>dockerfile-maven-plugin</artifactId>
-				<version>1.4.4</version>
+				<version>1.4.13</version>
 				<executions>
 					<execution>
 						<id>build-image</id>
@@ -442,6 +442,7 @@
         			<buildArgs>
 						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
 						<VERSION_FILE>${git.version.name}</VERSION_FILE>
+						<BASE_IMAGE>${docker.image.base}</BASE_IMAGE>
 					</buildArgs>
 					
         			<repository>${docker.repostory}/${docker.registry.name}/${docker.image.name}</repository>

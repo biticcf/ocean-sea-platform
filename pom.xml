@@ -29,6 +29,7 @@
 		<docker.repostory.password>xxxxxxxxx</docker.repostory.password>
 		<docker.registry.name>myregistry</docker.registry.name>
 		<docker.image.name>sea</docker.image.name>
+		<docker.image.base>openjdk:8u242-jdk</docker.image.base>
 		
 		<!-- git.version.name -->
 		<git.version.name>RELEASE.VERSION</git.version.name>
