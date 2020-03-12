@@ -1,9 +1,9 @@
+FROM openjdk:8u242-jdk
+
 # 定义变量
 ARG JAR_FILE
 ARG VERSION_FILE
 ARG BASE_IMAGE=openjdk:8u242-jdk
-
-FROM ${BASE_IMAGE}
 
 # 拷贝jar
 COPY ./lib/${JAR_FILE} /var/wd/app.jar
