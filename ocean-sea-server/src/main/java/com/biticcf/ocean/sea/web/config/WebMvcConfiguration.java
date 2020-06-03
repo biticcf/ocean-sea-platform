@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -91,9 +91,11 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         fastJsonHttpMessageConverter.setSupportedMediaTypes(fastMediaTypes);
         fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
         
-        HttpMessageConverter<?> converter = fastJsonHttpMessageConverter;
+        // 默认的StringHttpMessageConverter是iso-8859-1编码,需要转化为utf-8编码
+        // 它用来解析text/plain和其他未定义类型的消息
+        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter(Charset.forName("UTF-8"));
         
-        return new HttpMessageConverters(converter);
+        return new HttpMessageConverters(fastJsonHttpMessageConverter, stringHttpMessageConverter);
     }
     
     /**
