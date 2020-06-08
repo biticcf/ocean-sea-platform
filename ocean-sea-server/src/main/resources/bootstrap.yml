@@ -93,6 +93,16 @@ spring:
 #            #    password: myproxypassword
 #            #    non-proxy-hosts: example.com
   mvc: 
+    async: 
+      request-timeout: 60s
+    converters: 
+      preferred-json-mapper: jackson
+    format: 
+      date-format: yyyy-MM-dd HH:mm:ss  #接口输入端日期格式,被StringDateConverter覆盖
+      date: yyyy-MM-dd
+      time: HH:mm:ss
+    locale: SIMPLIFIED_CHINESE
+    log-request-details: true
     dispatch-trace-request: true
     dispatch-options-request: true
     favicon: 
@@ -105,6 +115,10 @@ spring:
     servlet: 
       load-on-startup: 4
       path: /
+  jackson: #接口输出端日期格式
+    date-format: 'yyyy-MM-dd HH:mm:ss'
+    time-zone: 'GMT+08:00'
+    joda-date-time-format: 'yyyy-MM-dd HH:mm:ss'
   resources: 
     add-mappings: true
     static-locations: 'classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/'
@@ -117,6 +131,11 @@ server:
   http2: 
     enabled: true
   max-http-header-size: 1MB
+  servlet: 
+    context-path: /
+    encoding:
+      enabled: true
+      charset: UTF-8
   tomcat: 
     basedir: ${TOMCAT_BASE}
     background-processor-delay: 30s

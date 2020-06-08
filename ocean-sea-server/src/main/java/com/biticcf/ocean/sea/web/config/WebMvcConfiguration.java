@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
-import org.springframework.boot.autoconfigure.http.HttpProperties;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -41,7 +41,7 @@ import com.github.biticcf.mountain.core.common.service.StringDecoderForHeaderCon
  *
  */
 @Configuration(proxyBeanMethods = false)
-@EnableConfigurationProperties({ HttpProperties.class })
+@EnableConfigurationProperties({ ServerProperties.class })
 @Import({ WebMvcAutoConfiguration.class })
 @ComponentScan(
         value = "com.biticcf.ocean.sea.web",
@@ -65,8 +65,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
      * @return 转换结果
      */
     @Bean
-    public StringDecoderForHeaderConverter stringHeaderConverter(HttpProperties httpProperties) {
-    	return new StringDecoderForHeaderConverter(httpProperties.getEncoding().getCharset());
+    public StringDecoderForHeaderConverter stringHeaderConverter(ServerProperties serverProperties) {
+    	return new StringDecoderForHeaderConverter(serverProperties.getServlet().getEncoding().getCharset());
     }
     
     /**

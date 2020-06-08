@@ -3,13 +3,6 @@ spring:
     name: ${TENANT_GROUP:}ocean-sea
   main: 
     banner-mode: CONSOLE #解决输出两次banner，在bootstrap.yml不配置banner-mode或者banner-mode=OFF
-  http: 
-    converters: 
-      preferred-json-mapper: jackson
-    encoding:
-      enabled: true
-      charset: UTF-8
-    log-request-details: false
   servlet:
     multipart: 
       enabled: true
@@ -18,16 +11,8 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
       resolve-lazily: false
-  jackson: #接口输出端日期格式
-    date-format: 'yyyy-MM-dd HH:mm:ss'
-    time-zone: 'GMT+08:00'
-    joda-date-time-format: 'yyyy-MM-dd HH:mm:ss'
   messages: 
     encoding: UTF-8
-  mvc:  #WebMvcAutoConfiguration自动配置
-    async: 
-      request-timeout: 60s
-    date-format: yyyy-MM-dd HH:mm:ss  #接口输入端日期格式,被StringDateConverter覆盖
   transaction: 
     # Default transaction timeout in seconds.
     default-timeout: 600s
@@ -95,8 +80,6 @@ server:
   display-name: ${TENANT_GROUP:}ocean-sea
   connection-timeout: 120s   # 废弃
   server-header: 
-  servlet: 
-    context-path: /
   tomcat: 
     async-timeout: 60s
     max-connections: ${SERVER.TOMCAT.MAX-CONNECTIONS:10240}
