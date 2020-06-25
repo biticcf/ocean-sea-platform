@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
@@ -55,6 +56,7 @@ public interface DemoDAO extends MountainBaseMapper<DemoPo> {
 	 * @param demoPo 数据记录
 	 * @return 保存成功条数
 	 */
+	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "ID")
 	@InsertProvider(type = DemoSqlProvider.class, method = "insert")
 	int insert(DemoPo demoPo);
 	/**
@@ -62,6 +64,7 @@ public interface DemoDAO extends MountainBaseMapper<DemoPo> {
 	 * @param demoList 对象集
 	 * @return 保存成功条数
 	 */
+	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "ID")
 	@InsertProvider(type = DemoSqlProvider.class, method = "inserts")
 	int batchInsert(List<DemoPo> demoList);
 }
