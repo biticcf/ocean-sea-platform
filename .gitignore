@@ -24,6 +24,7 @@
 # Logs and databases #
 ######################
 *.log
+*.lck
 
 # OS generated files #
 ######################

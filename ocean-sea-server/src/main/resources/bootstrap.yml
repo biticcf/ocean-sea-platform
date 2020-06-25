@@ -12,6 +12,7 @@ spring:
     exclude: 
      - com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration
      - org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration
+     - org.springframework.boot.autoconfigure.transaction.jta.JtaAutoConfiguration
   banner: 
     charset: UTF-8
     location: classpath:banner.txt
