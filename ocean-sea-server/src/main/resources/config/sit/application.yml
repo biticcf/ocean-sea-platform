@@ -172,8 +172,8 @@ datasource:
     name: master
     initializationMode: ALWAYS
     # replication不能用于xa事务
-    # url: jdbc:mysql://${DRUID.HOST:localhost}:${DRUID.PORT:3306}/${DRUID.DATABASE:goods}?allowMultiQueries=true&useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=true&serverTimezone=GMT%2B8
-    url: jdbc:mysql:replication://${DRUID.HOST:localhost}:${DRUID.PORT:3306}/${DRUID.DATABASE:goods}?allowMultiQueries=true&useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=true&serverTimezone=GMT%2B8
+    # url: jdbc:mysql://${DRUID.HOST:localhost}:${DRUID.PORT:3306}/${DRUID.DATABASE:goods}?allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=true&serverTimezone=GMT%2B8
+    url: jdbc:mysql:replication://${DRUID.HOST:localhost}:${DRUID.PORT:3306}/${DRUID.DATABASE:goods}?allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=true&serverTimezone=GMT%2B8
     username: ${DRUID.USERNAME:demotest}
     password: ${DRUID.PASSWORD:demotest}
     generateUniqueName: true # Whether to generate a random datasource name.
