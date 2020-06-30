@@ -255,6 +255,16 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
+				<excludes>
+					<exclude>jks/*</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<includes>
+					<include>jks/mountain_ks.jks</include>
+				</includes>
 			</resource>
 			<resource>
 				<directory>src/main/bin</directory>

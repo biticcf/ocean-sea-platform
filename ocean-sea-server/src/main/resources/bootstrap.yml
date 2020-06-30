@@ -129,7 +129,13 @@ server:
     enabled: true
     mime-types: 'text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json,application/xml'
     min-response-size: 1KB
-  http2: 
+  ssl: # 启用http2需要开启ssl
+    enabled: true
+    key-store: classpath:jks/mountain_ks.jks
+    key-store-type: PKCS12
+    key-store-password: mountain_ks_paswd
+    key-password: mountain_paswd
+  http2: # 开启http2,需要jdk9+，tomcat9+,否则默认启用http1.1协议
     enabled: true
   max-http-header-size: 1MB
   servlet: 
