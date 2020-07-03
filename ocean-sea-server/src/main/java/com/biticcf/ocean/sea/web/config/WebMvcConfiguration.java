@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
@@ -33,6 +34,7 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.github.biticcf.mountain.core.common.service.StringDateConverter;
 import com.github.biticcf.mountain.core.common.service.StringDecoderForHeaderConverter;
+import com.github.biticcf.mountain.core.common.trace.TraceFilter;
 
 /**
  * @Author: DanielCao
@@ -133,6 +135,21 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         filterRegistrationBean.setFilter(new WebStatFilter());
         filterRegistrationBean.addUrlPatterns("/*");
         filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
+        
+        return filterRegistrationBean;
+    }
+    
+    /**
+     * + 添加trace拦截器
+     * @param prefix 拦截器key前缀,默认是spring.application.name
+     * @return 拦截器
+     */
+    @Bean
+    public FilterRegistrationBean<TraceFilter> traceFilterRegistrationBean(@Value("${spring.application.name}") String prefix) {
+        FilterRegistrationBean<TraceFilter> filterRegistrationBean = new FilterRegistrationBean<>();
+        filterRegistrationBean.setFilter(new TraceFilter(prefix));
+        filterRegistrationBean.addUrlPatterns("/*");
+        filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico");
         
         return filterRegistrationBean;
     }

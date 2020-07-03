@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import com.biticcf.ocean.sea.domain.feign.fallback.CategoryFeignClientFallback;
+import com.github.biticcf.mountain.core.common.trace.TraceContext;
 
 import feign.Client;
 import feign.Logger;
@@ -111,6 +112,7 @@ public class FeignConfig {
 			@Override
 			public void apply(RequestTemplate template) {
 				template.header("User-Agent", userAgent);
+				template.header(TraceContext.TRACE_ID, TraceContext.getTrace());
 			}
     	};
     	
